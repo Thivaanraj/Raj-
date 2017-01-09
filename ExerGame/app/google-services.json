@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "148386224778",
+    "firebase_url": "https://exergame-de285.firebaseio.com",
+    "project_id": "exergame-de285",
+    "storage_bucket": "exergame-de285.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148386224778:android:7dcb026a7a74d3e0",
+        "android_client_info": {
+          "package_name": "pc1.exergame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "148386224778-diop0lfh43jc41tb5j9mlo351jc6jcdp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pc1.exergame",
+            "certificate_hash": "A20E481C453651A5CC4399ACDA5BF2A302C5ED94"
+          }
+        },
+        {
+          "client_id": "148386224778-m6kjc0541tttt8j4ntc4soginol08fav.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVVpi2358icenHhbZHgPm9VnPF-LbybYg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "148386224778-m6kjc0541tttt8j4ntc4soginol08fav.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
