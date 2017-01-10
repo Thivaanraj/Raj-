@@ -37,11 +37,20 @@
         android:id="@+id/password" />
 
     <Button
-        android:text="Login / Sgin Up"
+        android:text="Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
-        android:id="@+id/button2"
+        android:layout_marginTop="26dp"
+        android:id="@+id/loginbnt"
         android:layout_below="@+id/password"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignStart="@+id/password" />
+
+    <Button
+        android:text="Sign Up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/signupbtn"
+        android:layout_alignBaseline="@+id/loginbnt"
+        android:layout_alignBottom="@+id/loginbnt"
+        android:layout_alignEnd="@+id/password" />
 </RelativeLayout>
