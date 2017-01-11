@@ -11,19 +11,6 @@
     tools:context="pc1.exergame.SignInActivity">
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="email"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="130dp"
-        android:padding="10dp"
-        android:background="@drawable/back"
-        android:id="@+id/login" />
-
-    <EditText
         android:hint="password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,4 +40,35 @@
         android:layout_alignBaseline="@+id/loginbnt"
         android:layout_alignBottom="@+id/loginbnt"
         android:layout_alignEnd="@+id/password" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/password"
+        android:layout_toStartOf="@+id/signupbtn"
+        android:layout_marginBottom="60dp"
+        android:id="@+id/tvSignInStatus" />
+
+    <Button
+        android:text="Log Out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginbnt"
+        android:layout_alignStart="@+id/loginbnt"
+        android:layout_marginTop="13dp"
+        android:id="@+id/logoutbtn" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="email"
+        android:ems="10"
+        android:layout_marginTop="34dp"
+        android:padding="10dp"
+        android:background="@drawable/back"
+        android:id="@+id/login"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
