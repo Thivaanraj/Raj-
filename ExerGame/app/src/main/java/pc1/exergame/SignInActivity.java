@@ -87,8 +87,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 updateStatus();
             }
         });
-
-
     }
 
     private void signOut(){
