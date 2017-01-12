@@ -41,15 +41,6 @@
         android:layout_alignBottom="@+id/loginbnt"
         android:layout_alignEnd="@+id/password" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/password"
-        android:layout_toStartOf="@+id/signupbtn"
-        android:layout_marginBottom="60dp"
-        android:id="@+id/tvSignInStatus" />
-
     <Button
         android:text="Log Out"
         android:layout_width="wrap_content"
@@ -71,4 +62,12 @@
         android:id="@+id/login"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvSignInStatus"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/signupbtn" />
 </RelativeLayout>
