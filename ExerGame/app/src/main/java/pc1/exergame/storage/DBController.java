@@ -1,4 +1,4 @@
-package pc1.exergame;
+package pc1.exergame.storage;
 
 /**
  * Created by Mylango on 12. 1. 2017.

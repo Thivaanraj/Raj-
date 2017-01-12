@@ -1,4 +1,4 @@
-package pc1.exergame;
+package pc1.exergame.random;
 
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
+import pc1.exergame.R;
 
 public class TabbedMainActivity extends AppCompatActivity {
 

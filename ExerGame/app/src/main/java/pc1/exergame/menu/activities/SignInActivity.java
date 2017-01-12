@@ -1,4 +1,4 @@
-package pc1.exergame;
+package pc1.exergame.menu.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,10 +10,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+
+import pc1.exergame.R;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -37,6 +43,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         etPass = (EditText) findViewById(R.id.password);
 
         mAuth = FirebaseAuth.getInstance();
+
+        autoLogin();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -77,18 +85,36 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         String email = etEmail.getText().toString();
         String password = etPass.getText().toString();
 
+        email = email.replace(" ", "");
+
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(SignInActivity.this, "Signed In", Toast.LENGTH_SHORT).show();
+                    toastMessage(SignInActivity.this, "Signed In");
                     goToMain(view);
                 } else {
-                    Toast.makeText(SignInActivity.this, "Sign In failed", Toast.LENGTH_SHORT).show();
+                    toastMessage(SignInActivity.this, "Sign In failed");
                 }
                 updateStatus();
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                    toastMessage(SignInActivity.this, "Invalid Password");
+                } else if (e instanceof FirebaseAuthInvalidUserException){
+                    toastMessage(SignInActivity.this, "Invalid email");
+                } else {
+                    toastMessage(SignInActivity.this, e.getLocalizedMessage());
+                }
+            }
         });
+    }
+
+
+    private void toastMessage(SignInActivity obj, String message){
+        Toast.makeText(obj, message, Toast.LENGTH_SHORT).show();
     }
 
     private void signOut(){
@@ -102,16 +128,36 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         String email = etEmail.getText().toString();
         String password = etPass.getText().toString();
 
+        email = email.replace(" ", "");
+
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(SignInActivity.this, "User was created", Toast.LENGTH_SHORT).show();
+                    toastMessage(SignInActivity.this, "User was created");
                 } else {
-                    Toast.makeText(SignInActivity.this, "Account creation failed", Toast.LENGTH_SHORT).show();
+                    toastMessage(SignInActivity.this, "Account creation failed");
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                if (e instanceof FirebaseAuthUserCollisionException){
+                    toastMessage(SignInActivity.this, "Email in use");
+                } else {
+                    toastMessage(SignInActivity.this, e.getLocalizedMessage());
                 }
             }
         });
+    }
+
+    private void autoLogin(){
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if (user != null){
+            Intent intent = new Intent(this, MainMenuActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void updateStatus(){
@@ -159,7 +205,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     // <<<<<<<<<< INTENTS >>>>>>>>>>
     public void goToMain(View view){
-        Intent intent = new Intent(this, SampleActivity.class);
+        Intent intent = new Intent(this, MainMenuActivity.class);
         startActivity(intent);
     }
 
