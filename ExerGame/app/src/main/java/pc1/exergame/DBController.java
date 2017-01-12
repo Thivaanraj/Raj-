@@ -28,25 +28,9 @@ public class DBController {
         dbRef = db.getReference();
     }
 
-    /*
-    * onCreate(){
-    *   switch(level){
-    *       case 1:
-    *           List
-    *
-*           case 2:
-*               List
-*               List
-*               List
-    *   }
-    * }
-    *
-    *
-    * */
-
 
     /*
-    * CHALLENGE BEGIN
+    * <<<<<< CHALLENGE BEGIN >>>>>>
     * */
 
     public void testPush(){
@@ -71,6 +55,7 @@ public class DBController {
         dbRef.child("challenges").child(idString).child("lon").setValue(lon);
         dbRef.child("challenges").child(idString).child("ex1").setValue(ex1);
         dbRef.child("challenges").child(idString).child("attemptCount").setValue(0);
+        dbRef.child("challenges").child(idString).child("isActive").setValue(1);
 
     }
 
@@ -83,6 +68,8 @@ public class DBController {
         dbRef.child("challenges").child(idString).child("ex2").setValue(ex2);
         dbRef.child("challenges").child(idString).child("ex3").setValue(ex3);
         dbRef.child("challenges").child(idString).child("attemptCount").setValue(0);
+        dbRef.child("challenges").child(idString).child("isActive").setValue(1);
+
     }
 
     public void createChallengeHard(int id, double lat, double lon, List<Integer>ex1, List<Integer>ex2, List<Integer>ex3, List<Integer>ex4, List<Integer>ex5){
@@ -96,11 +83,26 @@ public class DBController {
         dbRef.child("challenges").child(idString).child("ex4").setValue(ex4);
         dbRef.child("challenges").child(idString).child("ex5").setValue(ex5);
         dbRef.child("challenges").child(idString).child("attemptCount").setValue(0);
+        dbRef.child("challenges").child(idString).child("isActive").setValue(1);
+
+    }
+
+    public void endChallenge(int id){
+        String idString = Integer.toString(id);
+        dbRef.child("chalenges").child(idString).child("isActive").setValue(0);
+
     }
 
     /*
-    * CHALLENGE ATTEMPT BEGIN
+    * <<<<<< CHALLENGE ATTEMPT BEGIN >>>>>>
     * */
+
+    /*public void isNear(int challengeID, double currentLat, double currentLon){
+        String idString = Integer.toString(challengeID);
+        DatabaseReference latRef = db.getReference().child("chalenges").child(idString).child("lat");
+        DatabaseReference lonRef = db.getReference().child("chalenges").child(idString).child("lat");
+        if(currentLat - )
+    }*/
 
     public void createAttempt(int attemptID, int userID, int challengeID, int time){ //int len docasne kym sa zhodneme na formate
         String idString = Integer.toString(attemptID);
@@ -112,10 +114,10 @@ public class DBController {
         dbRef.child("challenges").child(challengeIdString).child("attemptCount").setValue(userID);
     }
 
-    public void incrementAttemptCount(int id){
-        String idString = Integer.toString(id);
+    /*public void incrementAttemptCount(int id){
+        final String idString = Integer.toString(id);
         DatabaseReference idRef = db.getReference();
-        idRef = db.getReference().child("testDB").child(idString).child("attemptCount");
+        idRef = db.getReference().child("challenges").child(idString).child("attemptCount");
         idRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(final MutableData currentData) {
@@ -124,7 +126,7 @@ public class DBController {
                 } else if(((Long) currentData.getValue()) < 50 ) {
                     currentData.setValue((Long) currentData.getValue() + 1);
                 } else if(((Long) currentData.getValue()) == 50 ) {
-                    dbRef.child()
+                    endChallenge(idString);
                 }
 
                 return Transaction.success(currentData);
@@ -139,22 +141,16 @@ public class DBController {
                 }
             }
         });
-    }
-
-    public void setInactive(){
-
-    }
-
-
+    }*/
 
     /*
-    * ID INCREMENTOR BEGIN
+    * <<<<<< ID INCREMENTOR BEGIN >>>>>>
     * */
 
     public void incrementUserID(int id){
         String idString = Integer.toString(id);
         DatabaseReference idRef = db.getReference();
-        idRef = db.getReference().child("testDB").child(idString);
+        idRef = db.getReference().child("nextID").child("nextUser");
         idRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(final MutableData currentData) {
@@ -181,7 +177,7 @@ public class DBController {
     public void incrementChallengeID(int id){
         String idString = Integer.toString(id);
         DatabaseReference idRef = db.getReference();
-        idRef = db.getReference().child("testDB").child(idString);
+        idRef = db.getReference().child("nextID").child("nextChallenge");
         idRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(final MutableData currentData) {
@@ -208,7 +204,7 @@ public class DBController {
     public void incrementAttemptID(int id){
         String idString = Integer.toString(id);
         DatabaseReference idRef = db.getReference();
-        idRef = db.getReference().child("testDB").child(idString);
+        idRef = db.getReference().child("nextID").child("nextAttempt");
         idRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(final MutableData currentData) {
@@ -232,5 +228,16 @@ public class DBController {
         });
     }
 
+    /*
+    * <<<<<< GETTERS >>>>>>
+    * */
+
+    public void getChallenge(){
+
+    }
+
+    public void getAttempt(){
+
+    }
 
 }

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "685071578495-0mb0infumqet18j6glmol6vudvv76vtj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pc1.exergame",
+            "certificate_hash": "AD0E293298F029535EE452AEB937B7BB274C8EFC"
+          }
+        },
+        {
           "client_id": "685071578495-qpmj2cgqv8ueurp9iug1l1fvju9ot4pu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

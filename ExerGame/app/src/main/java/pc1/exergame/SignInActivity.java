@@ -71,7 +71,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         return true;
     }
 
-    private void signUserIn() {
+    private void signUserIn(final View view) {
         if (!checkFormFields()) return;
 
         String email = etEmail.getText().toString();
@@ -82,6 +82,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(SignInActivity.this, "Signed In", Toast.LENGTH_SHORT).show();
+                    goToMain(view);
                 } else {
                     Toast.makeText(SignInActivity.this, "Sign In failed", Toast.LENGTH_SHORT).show();
                 }
@@ -129,8 +130,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.loginbnt:
-                signUserIn();
-                goToMain(v);
+                signUserIn(v);
                 break;
 
             case R.id.signupbtn:
