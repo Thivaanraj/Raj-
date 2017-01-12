@@ -58,10 +58,9 @@ public class DBController {
         dbRef.child("testDB").child("firstTest").child("lat").setValue("newshit");
         dbRef.child("testDB").child("firstTest").child("lon").setValue(69.69);
         dbRef.child("testDB").child("firstTest").child("ex1").setValue(ex1);
-        dbRef.child("testDB").child("firstTest").child("attemptCount").setValue(0);
+        //dbRef.child("testDB").child("firstTest").child("attemptCount").setValue(0);
         dbRef.child("testDB").child("firstTest").child("isActive").setValue(1);
 
-        getAttemptCount();
 
     }
 
@@ -113,9 +112,50 @@ public class DBController {
         dbRef.child("challenges").child(challengeIdString).child("attemptCount").setValue(userID);
     }
 
-    public void getAttemptCount(){
-        dbRef = db.getReference().child("testDB").child("firstTest").child("attemptCount");
-        dbRef.runTransaction(new Transaction.Handler() {
+    public void incrementAttemptCount(int id){
+        String idString = Integer.toString(id);
+        DatabaseReference idRef = db.getReference();
+        idRef = db.getReference().child("testDB").child(idString).child("attemptCount");
+        idRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(final MutableData currentData) {
+                if (currentData.getValue() == null) {
+                    currentData.setValue(1);
+                } else if(((Long) currentData.getValue()) < 50 ) {
+                    currentData.setValue((Long) currentData.getValue() + 1);
+                } else if(((Long) currentData.getValue()) == 50 ) {
+                    dbRef.child()
+                }
+
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError firebaseError, boolean committed, DataSnapshot currentData) {
+                if (firebaseError != null) {
+                    //Log.d("Firebase counter increment failed.");
+                } else {
+                    //Log.d("Firebase counter increment succeeded.");
+                }
+            }
+        });
+    }
+
+    public void setInactive(){
+
+    }
+
+
+
+    /*
+    * ID INCREMENTOR BEGIN
+    * */
+
+    public void incrementUserID(int id){
+        String idString = Integer.toString(id);
+        DatabaseReference idRef = db.getReference();
+        idRef = db.getReference().child("testDB").child(idString);
+        idRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(final MutableData currentData) {
                 if (currentData.getValue() == null) {
@@ -138,19 +178,59 @@ public class DBController {
         });
     }
 
+    public void incrementChallengeID(int id){
+        String idString = Integer.toString(id);
+        DatabaseReference idRef = db.getReference();
+        idRef = db.getReference().child("testDB").child(idString);
+        idRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(final MutableData currentData) {
+                if (currentData.getValue() == null) {
+                    currentData.setValue(1);
+                } else {
+                    currentData.setValue((Long) currentData.getValue() + 1);
+                }
 
+                return Transaction.success(currentData);
+            }
 
-    /*
-    * ID INCREMENTOR BEGIN
-    * */
-
-    public void incrementUserID(int id){
-        dbRef.child("nextID").child("nextUser").setValue(id);
+            @Override
+            public void onComplete(DatabaseError firebaseError, boolean committed, DataSnapshot currentData) {
+                if (firebaseError != null) {
+                    //Log.d("Firebase counter increment failed.");
+                } else {
+                    //Log.d("Firebase counter increment succeeded.");
+                }
+            }
+        });
     }
 
-    public void incrementChallengeID(int id){dbRef.child("nextID").child("nextChallenge").setValue(id);}
+    public void incrementAttemptID(int id){
+        String idString = Integer.toString(id);
+        DatabaseReference idRef = db.getReference();
+        idRef = db.getReference().child("testDB").child(idString);
+        idRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(final MutableData currentData) {
+                if (currentData.getValue() == null) {
+                    currentData.setValue(1);
+                } else {
+                    currentData.setValue((Long) currentData.getValue() + 1);
+                }
 
-    public void incrementAttemptID(int id){dbRef.child("nextID").child("nextAttempt").setValue(id);}
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError firebaseError, boolean committed, DataSnapshot currentData) {
+                if (firebaseError != null) {
+                    //Log.d("Firebase counter increment failed.");
+                } else {
+                    //Log.d("Firebase counter increment succeeded.");
+                }
+            }
+        });
+    }
 
 
 }
