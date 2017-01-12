@@ -26,8 +26,8 @@ public class DBController {
 
     public void testPush(){
         dbRef.child("testDB").child("firstTest");
-        dbRef.child("testDB").child("firstTest").child("lat").setValue(66.66);
-        dbRef.child("testDB").child("firstTest").child("lat").setValue(69.69);
+        dbRef.child("testDB").child("firstTest").child("lat").setValue("newshit");
+        dbRef.child("testDB").child("firstTest").child("lon").setValue(69.69);
     }
 
     public void createChallengeEasy(int id, double lat, double lon, List<Integer>ex1){

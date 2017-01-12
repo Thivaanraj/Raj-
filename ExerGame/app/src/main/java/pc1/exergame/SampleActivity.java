@@ -7,17 +7,14 @@ import android.widget.Button;
 
 public class SampleActivity extends AppCompatActivity{
 
-    DBController dbc = new DBController();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
+        DBController dbc = new DBController();
+        dbc.testPush();
     }
 
-
-    /*public void clickButton(View v) {
-        Button button=(Button) v;
-        dbc.testPush();
-    }*/
 }
