@@ -1,5 +1,6 @@
 package pc1.exergame;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -129,6 +130,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.loginbnt:
                 signUserIn();
+                goToMain(v);
                 break;
 
             case R.id.signupbtn:
@@ -154,5 +156,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
+    // <<<<<<<<<< INTENTS >>>>>>>>>>
+    public void goToMain(View view){
+        Intent intent = new Intent(this, SampleActivity.class);
+        startActivity(intent);
+    }
+
 
 }

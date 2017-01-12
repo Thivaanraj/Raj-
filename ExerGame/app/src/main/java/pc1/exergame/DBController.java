@@ -11,12 +11,24 @@ import java.util.List;
 
 public class DBController {
 
-    FirebaseDatabase db = FirebaseDatabase.getInstance();
-    DatabaseReference dbRef = db.getReference();
+    FirebaseDatabase db;
+    DatabaseReference dbRef;
+
+
+    public DBController(){
+        db = FirebaseDatabase.getInstance();
+        dbRef = db.getReference();
+    }
 
     /*
     * CHALLENGE BEGIN
     * */
+
+    public void testPush(){
+        dbRef.child("testDB").child("firstTest");
+        dbRef.child("testDB").child("firstTest").child("lat").setValue(66.66);
+        dbRef.child("testDB").child("firstTest").child("lat").setValue(69.69);
+    }
 
     public void createChallengeEasy(int id, double lat, double lon, List<Integer>ex1){
         String idString = Integer.toString(id);
