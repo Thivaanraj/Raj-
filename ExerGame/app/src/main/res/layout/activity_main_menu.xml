@@ -1,66 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:fitsSystemWindows="true"
     tools:context="pc1.exergame.menu.activities.MainMenuActivity">
-    
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_container"
-        android:layout_centerInParent="true" />
 
-    <Button
-        android:text="Chall"
-        android:layout_width="wrap_content"
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/challenges"
-        android:onClick="ChallengesClick"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:textSize="12sp" />
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <Button
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_main" />
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Map"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/challenges"
-        android:id="@+id/map"
-        android:onClick="MapClick"/>
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="bottom">
+        <Button
+            android:id="@+id/map"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="20dp"
+            android:onClick="MapClick"
+            android:background="@drawable/ic_map"/>
+        <Button
+            android:id="@+id/challenges"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:onClick="ChallengesClick"
+            android:background="@drawable/ic_add"/>
+        <Button
+            android:id="@+id/ranking"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:onClick="RankingClick"
+            android:background="@drawable/ic_rank"/>
+        <Button
+            android:id="@+id/dashboard"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:onClick="DashboardClick"
+            android:background="@drawable/ic_person"/>
+        <Button
+            android:id="@+id/global_logout"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="20dp"
+            android:onClick="globalSignOut"
+            android:background="@drawable/ic_logout"/>
 
-    <Button
-        android:text="Ranking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/map"
-        android:id="@+id/ranking"
-        android:onClick="RankingClick"
-        android:textSize="14sp" />
+    </LinearLayout>
 
-    <Button
-        android:text="Dash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/ranking"
-        android:id="@+id/dashboard"
-        android:onClick="DashboardClick"/>
-
-    <Button
-        android:text="Log out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/global_logout"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:onClick="globalSignOut"/>
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
