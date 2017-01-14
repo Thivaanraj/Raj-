@@ -19,4 +19,5 @@
         android:id="@+id/fragment_container"
         android:layout_centerInParent="true"/>
 
+
 </RelativeLayout>

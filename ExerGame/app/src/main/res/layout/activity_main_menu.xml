@@ -16,64 +16,69 @@
 
     <include layout="@layout/content_main" />
 
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="bottom"
         android:background="?attr/colorPrimary"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:gravity="bottom">
-        <Button
-            android:id="@+id/map"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginRight="20dp"
-            android:onClick="MapClick"
-            android:background="@drawable/ic_map"/>
-        <Button
-            android:id="@+id/challenges"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:onClick="ChallengesClick"
-            android:background="@drawable/ic_add"/>
-        <Button
-            android:id="@+id/ranking"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:onClick="RankingClick"
-            android:background="@drawable/ic_rank"/>
-        <Button
-            android:id="@+id/dashboard"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:onClick="DashboardClick"
-            android:background="@drawable/ic_person"/>
-        <Button
-            android:id="@+id/global_logout"
-            android:layout_width="30dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft="20dp"
-            android:onClick="globalSignOut"
-            android:background="@drawable/ic_logout"/>
+        app:popupTheme="@style/AppTheme.PopupOverlay">
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="bottom"
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/map_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_map"
+                android:onClick="MapClick" />
+
+            <Button
+                android:id="@+id/challenges_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_add"
+                android:onClick="ChallengesClick" />
+
+            <Button
+                android:id="@+id/ranking_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_rank"
+                android:onClick="RankingClick" />
+
+            <Button
+                android:id="@+id/dashboard_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_person"
+                android:onClick="DashboardClick" />
+
+            <Button
+                android:id="@+id/global_logout_btn"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/ic_logout"
+                android:onClick="globalSignOut" />
+
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
 </android.support.design.widget.CoordinatorLayout>

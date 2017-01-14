@@ -10,12 +10,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import pc1.exergame.R;
 import pc1.exergame.fragments.ChallengesFragment;
 import pc1.exergame.fragments.DashboardFragment;
-import pc1.exergame.fragments.MapFragment;
+import pc1.exergame.fragments.MapViewFragment;
 import pc1.exergame.fragments.RankingFragment;
 
 public class MainMenuActivity extends AppCompatActivity {
 
     public static final String FRAGMENT_TAG = "fragment_tag";
+
+    public void setFocus(String focus) {
+        this.focus = focus;
+    }
+
+    private String focus = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +36,9 @@ public class MainMenuActivity extends AppCompatActivity {
         createDefaultFragment();
 
     }
-
+    
     private void createDefaultFragment(){
+        setFocus("challenges");
         ChallengesFragment fragment = new ChallengesFragment();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -40,6 +47,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void ChallengesClick(View view) {
+        setFocus("challenges");
         ChallengesFragment fragment = new ChallengesFragment();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -48,14 +56,20 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void MapClick(View view) {
-        MapFragment fragment = new MapFragment();
+        if (focus.equals("map")) return;
+        setFocus("map");
+        MapViewFragment fragment = new MapViewFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment, FRAGMENT_TAG)
                 .commit();
+
+        //Intent intent = new Intent(this, MapsActivity.class);
+        //startActivity(intent);
     }
 
     public void RankingClick(View view) {
+        setFocus("ranking");
         RankingFragment fragment = new RankingFragment();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -64,6 +78,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void DashboardClick(View view) {
+        setFocus("dashboard");
         DashboardFragment fragment = new DashboardFragment();
         getSupportFragmentManager()
                 .beginTransaction()
