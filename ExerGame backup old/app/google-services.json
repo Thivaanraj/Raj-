@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "685071578495",
+    "firebase_url": "https://pae-exergame-f3952.firebaseio.com",
+    "project_id": "pae-exergame-f3952",
+    "storage_bucket": "pae-exergame-f3952.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685071578495:android:7dcb026a7a74d3e0",
+        "android_client_info": {
+          "package_name": "pc1.exergame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685071578495-0mb0infumqet18j6glmol6vudvv76vtj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pc1.exergame",
+            "certificate_hash": "AD0E293298F029535EE452AEB937B7BB274C8EFC"
+          }
+        },
+        {
+          "client_id": "685071578495-qpmj2cgqv8ueurp9iug1l1fvju9ot4pu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pc1.exergame",
+            "certificate_hash": "85E507E70F5432369E8E19D949EC56DB7E41FA52"
+          }
+        },
+        {
+          "client_id": "685071578495-j2nigf5bcr3s4hvq1tu4sr4b0s3sag1k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pc1.exergame",
+            "certificate_hash": "86A75F154AD7D710C70141382FD386C4B42B8B7E"
+          }
+        },
+        {
+          "client_id": "685071578495-2g0v3nj6m5320kr79rp9ok30la8i5umh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4-h8Onzb48-hGwXe3suw47TcjQkrQLWc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685071578495-2g0v3nj6m5320kr79rp9ok30la8i5umh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
