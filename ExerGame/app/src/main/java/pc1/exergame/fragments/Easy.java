@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -39,8 +40,7 @@ public class Easy extends Fragment implements View.OnClickListener {
     private List<Integer> reps;
     private int isActive, attemptCount;
 
-    Spinner setEx, setSet, setRep;
-    ArrayAdapter adapter;
+    Button exBtn;
 
 
     public Easy() {
@@ -66,7 +66,11 @@ public class Easy extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        selectExercise(v);
+        switch (v.getId()) {
+            case R.id.loginbnt:
+                selectExercise(v);
+                break;
+        }
     }
 
     public void selectExercise(View v){
