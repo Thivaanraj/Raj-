@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import pc1.exergame.R;
 import pc1.exergame.fragments.ChallengesFragment;
 import pc1.exergame.fragments.DashboardFragment;
+import pc1.exergame.fragments.Easy;
 import pc1.exergame.fragments.MapViewFragment;
 import pc1.exergame.fragments.RankingFragment;
 
@@ -48,7 +49,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public void ChallengesClick(View view) {
         setFocus("challenges");
-        ChallengesFragment fragment = new ChallengesFragment();
+        Easy fragment = new Easy();
+        //ChallengesFragment fragment = new ChallengesFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment, FRAGMENT_TAG)

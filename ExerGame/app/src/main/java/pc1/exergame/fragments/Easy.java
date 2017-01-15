@@ -1,16 +1,23 @@
 package pc1.exergame.fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.DialogFragment;
-import android.app.Fragment;
-//import android.support.v4.app.Fragment;
+//import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -63,7 +70,71 @@ public class Easy extends Fragment implements View.OnClickListener {
     }
 
     public void selectExercise(View v){
-        ExerciseOne my_dialog = new ExerciseOne();
-        my_dialog.show(getFragmentManager(), "my_dialog");
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.dialog_exercise, null);
+        RadioGroup radioGroup = (RadioGroup) alertLayout.findViewById(R.id.radioGroup);
+        RadioButton pullups, pushups, squats, lunges, dips, oaPull, oaPush, hspu, muscleup;
+        //RadioButton cbShowPassword = (RadioButton) alertLayout.findViewById(R.id.selectPullups);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+            }
+        });
+
+
+        pullups = (RadioButton) alertLayout.findViewById(R.id.selectPullups);
+        pushups = (RadioButton) alertLayout.findViewById(R.id.selectPushups);
+        squats = (RadioButton) alertLayout.findViewById(R.id.selectSquats);
+        lunges = (RadioButton) alertLayout.findViewById(R.id.selectLunges);
+        dips = (RadioButton) alertLayout.findViewById(R.id.selectDips);
+        oaPull = (RadioButton) alertLayout.findViewById(R.id.selectOAPullups);
+        oaPush = (RadioButton) alertLayout.findViewById(R.id.selectOAPushups);
+        hspu = (RadioButton) alertLayout.findViewById(R.id.selectHSPU);
+        muscleup = (RadioButton) alertLayout.findViewById(R.id.selectMuscleups);
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        alert.setTitle("Select Exercise");
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+
+        int selection = radioGroup.getCheckedRadioButtonId();
+        switch (selection){
+            case (R.id.selectPullups):
+                selection = 1;
+                break;
+            case (R.id.selectPushups):
+                selection = 2;
+                break;
+            case (R.id.selectSquats):
+                selection = 3;
+                break;
+            case (R.id.selectLunges):
+                selection = 4;
+                break;
+            case (R.id.selectDips):
+                selection = 5;
+                break;
+            case (R.id.selectOAPullups):
+                selection = 6;
+                break;
+            case (R.id.selectOAPushups):
+                selection = 7;
+                break;
+            case (R.id.selectHSPU):
+                selection = 8;
+                break;
+            case (R.id.selectMuscleups):
+                selection = 9;
+                break;
+            case -1:
+                selection = 0;
+                break;
+        }
+
+        AlertDialog dialog = alert.create();
+        dialog.show();
+
     }
 }
