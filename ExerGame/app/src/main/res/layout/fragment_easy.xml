@@ -1,66 +1,47 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pc1.exergame.fragments.Easy">
+    tools:context="pc1.exergame.fragments.Easy"
+    android:layout_marginTop="10dp">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="1">
 
-        <RelativeLayout
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.03"
-            android:weightSum="1">
+    <EditText
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:hint="SETS"
+            android:ems="10"
+            android:background="@drawable/edit_text_line"
+            android:id="@+id/edit_sets"
+            android:layout_alignBottom="@+id/edit_reps"
+            android:layout_toLeftOf="@+id/edit_reps"
+            android:layout_toStartOf="@+id/edit_reps"
+            android:layout_alignParentTop="true" />
 
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:hint="REPS"
+            android:background="@drawable/edit_text_line"
+            android:ems="10"
+            android:id="@+id/edit_reps"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true" />
 
-
-
-            <Button
-                android:text="Reps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rep1_btn"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true" />
-
-            <Button
-                android:text="Exercise"
-                android:layout_width="210dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/ex1_btn"
-                android:layout_alignParentTop="true"
-                />
-
-            <Button
-                android:text="Sets"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/set1_btn"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/ex1_btn" />
-
-            <Button
-                android:text="Create Challenge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/create_challenge_btn"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="29dp" />
-
-        </RelativeLayout>
+    <Spinner
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:id="@+id/spinner"
+        android:layout_alignBottom="@+id/edit_sets"
+        android:layout_alignParentStart="true" />
 
 
-
-    </LinearLayout>
-
-
-</FrameLayout>
+</RelativeLayout>

@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
+
+import pc1.exergame.popups.ExerciseOne;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -13,8 +16,9 @@ import pc1.exergame.fragments.DashboardFragment;
 import pc1.exergame.fragments.Easy;
 import pc1.exergame.fragments.MapViewFragment;
 import pc1.exergame.fragments.RankingFragment;
+import pc1.exergame.popups.ExerciseOneDialog;
 
-public class MainMenuActivity extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity implements ExerciseOneDialog.Communicator {
 
     public static final String FRAGMENT_TAG = "fragment_tag";
 
@@ -92,5 +96,10 @@ public class MainMenuActivity extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();
         finish();
+    }
+
+    @Override
+    public void onDialogMessage(String message) {
+        Toast.makeText(this, "MAIN: "+ message, Toast.LENGTH_SHORT).show();
     }
 }

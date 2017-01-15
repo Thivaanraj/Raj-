@@ -7,4 +7,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+
+    <string-array name="exercise_types">
+        <item>Pullups</item>
+        <item>Pushups</item>
+        <item>Squats</item>
+        <item>Lunges</item>
+        <item>Dips</item>
+        <item>One arm pullup</item>
+        <item>One arm pushup</item>
+        <item>Handstand pushup</item>
+        <item>Muscleup</item>
+        <item>Pistol squat</item>
+    </string-array>
 </resources>
