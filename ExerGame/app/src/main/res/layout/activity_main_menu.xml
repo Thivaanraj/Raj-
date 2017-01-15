@@ -38,7 +38,7 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/ic_map"
-                android:onClick="MapClick" />
+                android:onClick="goToMap"/>
 
             <Button
                 android:id="@+id/challenges_btn"
@@ -47,8 +47,7 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/ic_add"
-                android:onClick="ChallengesClick" />
+                android:background="@drawable/ic_add" />
 
             <Button
                 android:id="@+id/ranking_btn"
@@ -57,8 +56,7 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/ic_rank"
-                android:onClick="RankingClick" />
+                android:background="@drawable/ic_rank" />
 
             <Button
                 android:id="@+id/dashboard_btn"
@@ -67,8 +65,7 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/ic_person"
-                android:onClick="DashboardClick" />
+                android:background="@drawable/ic_person" />
 
             <Button
                 android:id="@+id/global_logout_btn"
