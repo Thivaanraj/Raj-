@@ -100,6 +100,8 @@ public class ExerciseOneDialog extends DialogFragment implements View.OnClickLis
                 this.communicator.onDialogMessage("pistol");
                 dismiss();
                 break;
+            case -1:
+
 
 
         }

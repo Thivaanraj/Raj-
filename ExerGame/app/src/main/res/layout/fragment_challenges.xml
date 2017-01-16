@@ -1,17 +1,38 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
+    android:orientation="vertical"
+    android:layout_marginTop="40dp"
     android:background="@android:color/holo_blue_light"
     tools:context="pc1.exergame.fragments.ChallengesFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:text="Challenges Fragment"
-        android:id="@+id/challengeTextID" />
 
-</RelativeLayout>
+    <Button
+        android:text="Easy"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/fetchEasyFrag_btn"
+        android:background="@color/colorPrimary"
+        android:layout_weight="1" />
+
+    <Button
+        android:text="Medium"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/fetchMediumFrag_btn"
+        android:background="@color/colorPrimary"
+        android:layout_weight="1" />
+
+    <Button
+        android:text="Hard"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/fetchHardFrag_btn"
+        android:background="@color/colorPrimary"
+        android:layout_weight="1" />
+</LinearLayout>

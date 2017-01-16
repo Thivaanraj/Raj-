@@ -22,6 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pc1.exergame.R;
@@ -35,15 +36,17 @@ import pc1.exergame.storage.DBController;
 public class Easy extends Fragment implements View.OnClickListener {
 
     private DBController dbc = new DBController();
-    private String id, type;
+    private String id, type, exSelection;
     private double lat, lon;
-    private List<Integer> exercises;
+    private List<String> exercises;
     private List<Integer> sets;
     private List<Integer> reps;
     private int isActive, attemptCount;
 
 
     Spinner exSpin;
+    EditText setsInput, repsInput;
+    Button createBtn;
 
 
     public Easy() {
@@ -59,16 +62,28 @@ public class Easy extends Fragment implements View.OnClickListener {
 
         View rootView = inflater.inflate(R.layout.fragment_easy, container, false);
 
-        exSpin = (Spinner) rootView.findViewById(R.id.spinner);
+        exercises = new ArrayList<String>();
+        sets = new ArrayList<Integer>();
+        reps = new ArrayList<Integer>();
 
+        createBtn = (Button) rootView.findViewById(R.id.createEasy_btn);
+        createBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createChallenge();
+            }
+        });
+
+
+        exSpin = (Spinner) rootView.findViewById(R.id.spinner);
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.exercise_types, android.R.layout.simple_spinner_item);
         exSpin.setAdapter(adapter);
+        exSpin.setSelection(0);
         exSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                type = parent.getItemAtPosition(position).toString();
-
-                Toast.makeText(getContext(),type,Toast.LENGTH_SHORT).show();
+                exSelection = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getContext(),exSelection,Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -77,6 +92,9 @@ public class Easy extends Fragment implements View.OnClickListener {
             }
         });
 
+        setsInput = (EditText) rootView.findViewById(R.id.edit_sets);
+        repsInput = (EditText) rootView.findViewById(R.id.edit_reps);
+
 
         // Inflate the layout for this fragment
         return rootView;
@@ -84,8 +102,15 @@ public class Easy extends Fragment implements View.OnClickListener {
     }
 
     public void createChallenge(){
-        //implement to get id
-        //dbc.createChallenge(id, type, lat, lon, exercises, sets, reps);
+        exercises.add(exSelection);
+        sets.add(Integer.parseInt(setsInput.getText().toString()));
+        reps.add(Integer.parseInt(repsInput.getText().toString()));
+        type = "easy";
+        lat = 66.66;
+        lon = 69.69;
+        id = "EasyChallenge";
+        dbc.createChallenge(id, type, lat, lon, exercises, sets, reps);
+        Toast.makeText(getContext(), "CHALLENGE CREATED", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -93,10 +118,6 @@ public class Easy extends Fragment implements View.OnClickListener {
 
     }
 
-    public void selectExercise(View v){
-
-
-    }
 
     public void showChoice(String message){
 

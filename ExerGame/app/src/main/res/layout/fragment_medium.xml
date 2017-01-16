@@ -1,0 +1,140 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pc1.exergame.fragments.Medium"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <Spinner
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:id="@+id/spinnerEx1_medium"
+            android:layout_alignBottom="@+id/edit_sets1_medium"
+            android:layout_alignParentStart="true"
+            android:spinnerMode="dialog"/>
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:hint="SETS"
+            android:ems="10"
+            android:background="@drawable/edit_text_line"
+            android:id="@+id/edit_sets1_medium"
+            android:layout_alignBottom="@+id/edit_reps1_medium"
+            android:layout_toLeftOf="@+id/edit_reps1_medium"
+            android:layout_toStartOf="@+id/edit_reps1_medium"
+            android:layout_alignParentTop="true" />
+
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:hint="REPS"
+            android:background="@drawable/edit_text_line"
+            android:ems="10"
+            android:id="@+id/edit_reps1_medium"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+        <Spinner
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:id="@+id/spinnerEx2_medium"
+            android:layout_alignBottom="@+id/edit_sets2_medium"
+            android:layout_alignParentStart="true"
+            android:spinnerMode="dialog"/>
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:hint="SETS"
+            android:ems="10"
+            android:background="@drawable/edit_text_line"
+            android:id="@+id/edit_sets2_medium"
+            android:layout_alignBottom="@+id/edit_reps2_medium"
+            android:layout_toLeftOf="@+id/edit_reps2_medium"
+            android:layout_toStartOf="@+id/edit_reps2_medium"
+            android:layout_alignParentTop="true" />
+
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:hint="REPS"
+            android:background="@drawable/edit_text_line"
+            android:ems="10"
+            android:id="@+id/edit_reps2_medium"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+        <Spinner
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:id="@+id/spinnerEx3_medium"
+            android:layout_alignBottom="@+id/edit_sets3_medium"
+            android:layout_alignParentStart="true"
+            android:spinnerMode="dialog"/>
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:hint="SETS"
+            android:ems="10"
+            android:background="@drawable/edit_text_line"
+            android:id="@+id/edit_sets3_medium"
+            android:layout_alignBottom="@+id/edit_reps3_medium"
+            android:layout_toLeftOf="@+id/edit_reps3_medium"
+            android:layout_toStartOf="@+id/edit_reps3_medium"
+            android:layout_alignParentTop="true" />
+
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:hint="REPS"
+            android:background="@drawable/edit_text_line"
+            android:ems="10"
+            android:id="@+id/edit_reps3_medium"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true" />
+    </RelativeLayout>
+
+    <Button
+        android:text="Create Challenge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/createMedium_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="130dp" />
+
+
+</LinearLayout>

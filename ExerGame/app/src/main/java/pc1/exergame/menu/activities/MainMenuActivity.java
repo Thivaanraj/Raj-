@@ -6,6 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import pc1.exergame.fragments.Hard;
+import pc1.exergame.fragments.Medium;
 import pc1.exergame.popups.ExerciseOne;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,7 +55,8 @@ public class MainMenuActivity extends AppCompatActivity implements ExerciseOneDi
 
     public void ChallengesClick(View view) {
         setFocus("challenges");
-        Easy fragment = new Easy();
+        Hard fragment = new Hard();
+        //Medium fragment = new Medium();
         //ChallengesFragment fragment = new ChallengesFragment();
         getSupportFragmentManager()
                 .beginTransaction()

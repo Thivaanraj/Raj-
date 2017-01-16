@@ -52,12 +52,15 @@ public class DBController {
 
     }
 
-    public void createChallengeEasy(String id, String type, double lat, double lon, List<Integer>ex1){
+    public void createChallenge(String id, String type, double lat, double lon, List<String> exercises,
+                                    List<Integer> sets, List<Integer> reps){
         dbRef.child("challenges").child(id);
         dbRef.child("challenges").child(id).child("type").setValue(type);
         dbRef.child("challenges").child(id).child("lat").setValue(lat);
         dbRef.child("challenges").child(id).child("lon").setValue(lon);
-        dbRef.child("challenges").child(id).child("ex1").setValue(ex1);
+        dbRef.child("challenges").child(id).child("exercises").setValue(exercises);
+        dbRef.child("challenges").child(id).child("sets").setValue(sets);
+        dbRef.child("challenges").child(id).child("reps").setValue(reps);
         dbRef.child("challenges").child(id).child("attemptCount").setValue(0);
         dbRef.child("challenges").child(id).child("isActive").setValue(1);
 
