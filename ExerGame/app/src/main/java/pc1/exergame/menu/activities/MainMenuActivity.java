@@ -1,5 +1,7 @@
 package pc1.exergame.menu.activities;
 
+import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -38,7 +40,7 @@ public class MainMenuActivity extends AppCompatActivity implements ExerciseOneDi
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         createDefaultFragment();
 
@@ -65,16 +67,16 @@ public class MainMenuActivity extends AppCompatActivity implements ExerciseOneDi
     }
 
     public void MapClick(View view) {
-        if (focus.equals("map")) return;
+        /*if (focus.equals("map")) return;
         setFocus("map");
         MapViewFragment fragment = new MapViewFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment, FRAGMENT_TAG)
                 .commit();
-
-        //Intent intent = new Intent(this, MapsActivity.class);
-        //startActivity(intent);
+        */
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
     }
 
     public void RankingClick(View view) {

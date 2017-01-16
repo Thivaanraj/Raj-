@@ -3,7 +3,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:background="@android:color/holo_blue_light"
     tools:context="pc1.exergame.fragments.MapViewFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -13,14 +12,11 @@
         android:layout_height="wrap_content">
     <fragment
         class="com.google.android.gms.maps.MapFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:text="Map Fragment"
         android:id="@id/mapView" />
     </com.google.android.gms.maps.MapView>
-
 
 
 </RelativeLayout>
