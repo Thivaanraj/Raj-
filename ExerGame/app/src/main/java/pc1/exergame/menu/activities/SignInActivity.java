@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import pc1.exergame.R;
 
@@ -37,7 +39,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         findViewById(R.id.signupbtn).setOnClickListener(this);
         findViewById(R.id.loginbnt).setOnClickListener(this);
-        findViewById(R.id.logoutbtn).setOnClickListener(this);
 
         etEmail = (EditText) findViewById(R.id.login);
         etPass = (EditText) findViewById(R.id.password);
@@ -58,13 +59,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             }
         };
 
-        updateStatus();
     }
 
     private boolean checkFormFields() {
         String email, password;
 
-        email = etEmail.getText().toString();
+        email = etEmail.getText().toString()+"@user.pae";
         password = etPass.getText().toString();
 
         if (email.isEmpty()) {
@@ -82,7 +82,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void signUserIn(final View view) {
         if (!checkFormFields()) return;
 
-        String email = etEmail.getText().toString();
+        String email = etEmail.getText().toString()+"@user.pae";
         String password = etPass.getText().toString();
 
         email = email.replace(" ", "");
@@ -96,7 +96,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 } else {
                     toastMessage(SignInActivity.this, "Sign In failed");
                 }
-                updateStatus();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -117,15 +116,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         Toast.makeText(obj, message, Toast.LENGTH_SHORT).show();
     }
 
-    private void signOut(){
-        mAuth.signOut();
-        updateStatus();
-    }
 
     private void createUserAccount(){
         if (!checkFormFields()) return;
 
-        String email = etEmail.getText().toString();
+        final String nick = etEmail.getText().toString();
+        String email = etEmail.getText().toString()+"@user.pae";
         String password = etPass.getText().toString();
 
         email = email.replace(" ", "");
@@ -135,6 +131,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     toastMessage(SignInActivity.this, "User was created");
+                    FirebaseDatabase db = FirebaseDatabase.getInstance();
+                    DatabaseReference dbRef = db.getReference().child("stats");
+                    dbRef.child(nick).setValue(0);
                 } else {
                     toastMessage(SignInActivity.this, "Account creation failed");
                 }
@@ -160,16 +159,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void updateStatus(){
-        TextView tvStat = (TextView) findViewById(R.id.tvSignInStatus);
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        if (user != null) {
-            tvStat.setText("Signed in: " + user.getEmail());
-        } else {
-            tvStat.setText("Signed Out");
-        }
-    }
 
 
     @Override
@@ -183,9 +172,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 createUserAccount();
                 break;
 
-            case R.id.logoutbtn:
-                signOut();
-                break;
         }
     }
 

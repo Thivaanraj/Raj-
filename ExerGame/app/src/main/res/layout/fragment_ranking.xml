@@ -3,15 +3,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:background="@android:color/holo_blue_light"
     tools:context="pc1.exergame.fragments.RankingFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:layout_centerInParent="true"
-        android:text="Ranking Fragment" />
+    <ListView
+        android:id="@+id/rankings_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    </ListView>
+
 
 </RelativeLayout>

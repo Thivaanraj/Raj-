@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
         android:id="@+id/loginbnt"
+        android:background="@color/colorPrimary"
         android:layout_below="@+id/password"
         android:layout_alignStart="@+id/password" />
 
@@ -37,24 +38,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/signupbtn"
+        android:background="@color/colorPrimary"
         android:layout_alignBaseline="@+id/loginbnt"
         android:layout_alignBottom="@+id/loginbnt"
         android:layout_alignEnd="@+id/password" />
 
-    <Button
-        android:text="Log Out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/loginbnt"
-        android:layout_alignStart="@+id/loginbnt"
-        android:layout_marginTop="13dp"
-        android:id="@+id/logoutbtn" />
+
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="email"
+        android:hint="nickname"
         android:ems="10"
         android:layout_marginTop="34dp"
         android:padding="10dp"
@@ -63,11 +58,5 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvSignInStatus"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/signupbtn" />
+
 </RelativeLayout>

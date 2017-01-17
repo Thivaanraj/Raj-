@@ -27,7 +27,6 @@ import java.util.List;
 
 import pc1.exergame.R;
 import pc1.exergame.popups.ExerciseOne;
-import pc1.exergame.popups.ExerciseOneDialog;
 import pc1.exergame.storage.DBController;
 
 /**
@@ -123,11 +122,5 @@ public class Easy extends Fragment implements View.OnClickListener {
 
     }
 
-    public void showDialog(View v){
-        FragmentManager manager = getFragmentManager();
-        ExerciseOneDialog exerciseOneDialog = new ExerciseOneDialog();
-        exerciseOneDialog.setTargetFragment(this, 1);
-        exerciseOneDialog.show(manager, "exDialog");
-    }
 
 }

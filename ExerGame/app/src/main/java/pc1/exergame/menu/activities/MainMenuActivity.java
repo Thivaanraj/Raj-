@@ -20,9 +20,9 @@ import pc1.exergame.fragments.DashboardFragment;
 import pc1.exergame.fragments.Easy;
 import pc1.exergame.fragments.MapViewFragment;
 import pc1.exergame.fragments.RankingFragment;
-import pc1.exergame.popups.ExerciseOneDialog;
 
-public class MainMenuActivity extends AppCompatActivity implements ExerciseOneDialog.Communicator {
+
+public class MainMenuActivity extends AppCompatActivity {
 
     public static final String FRAGMENT_TAG = "fragment_tag";
 
@@ -37,6 +37,7 @@ public class MainMenuActivity extends AppCompatActivity implements ExerciseOneDi
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -98,13 +99,11 @@ public class MainMenuActivity extends AppCompatActivity implements ExerciseOneDi
     }
 
     public void globalSignOut(View view) {
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();
         finish();
     }
 
-    @Override
-    public void onDialogMessage(String message) {
-        Toast.makeText(this, "MAIN: "+ message, Toast.LENGTH_SHORT).show();
-    }
+
 }
