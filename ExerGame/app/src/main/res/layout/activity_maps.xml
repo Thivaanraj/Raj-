@@ -15,5 +15,6 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="pc1.exergame.menu.activities.MapsActivity" />
+        tools:context="pc1.exergame.menu.activities.MapsActivity"
+        tools:layout="@layout/activity_main_menu" />
 </RelativeLayout>
