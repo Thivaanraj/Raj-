@@ -28,7 +28,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import pc1.exergame.R;
-import pc1.exergame.fragments.ChallengeQuery;
+import pc1.exergame.other.Haversine;
+import pc1.exergame.popups.ChallengeQuery;
 
 public class MapsActivity extends AppCompatActivity implements
         OnMapReadyCallback,
@@ -60,6 +61,8 @@ public class MapsActivity extends AppCompatActivity implements
     // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
+
+    private Haversine mhav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +177,16 @@ public class MapsActivity extends AppCompatActivity implements
                 ChallengeQuery query = new ChallengeQuery();
                 FragmentManager fm = getSupportFragmentManager();
 
-                query.show(fm, "LUL");
+                LatLng markPos = marker.getPosition();
+
+                Haversine mhav = new Haversine();
+
+                if (!mhav.IsClose(markPos.latitude, markPos.longitude, mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()).equals("true")){
+                    query.show(fm, "LUL");
+                } else {
+                    toastMessage("Challange too far away");
+                }
+
             }
         });
 
@@ -191,7 +203,7 @@ public class MapsActivity extends AppCompatActivity implements
 
         // Use a custom info window adapter to handle multiple lines of text in the
         // info window contents.
-        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+        /*mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
             @Override
             // Return null here, so that getInfoContents() is called next.
@@ -212,7 +224,7 @@ public class MapsActivity extends AppCompatActivity implements
 
                 return infoWindow;
             }
-        });
+        });*/
         /*
          * Set the map's camera position to the current location of the device.
          * If the previous state was saved, set the position to the saved state.
