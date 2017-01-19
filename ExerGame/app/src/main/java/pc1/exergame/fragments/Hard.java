@@ -14,6 +14,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +33,7 @@ import pc1.exergame.storage.DBController;
  */
 public class Hard extends Fragment implements View.OnClickListener {
 
+    FirebaseDatabase db;
     private DBController dbc = new DBController();
     private String id, type, exSelection1, exSelection2, exSelection3, exSelection4, exSelection5;
     private double lat, lon;
@@ -53,6 +60,8 @@ public class Hard extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_hard, container, false);
+
+        db = FirebaseDatabase.getInstance();
 
         exercises = new ArrayList<String>();
         sets = new ArrayList<Integer>();
@@ -187,12 +196,23 @@ public class Hard extends Fragment implements View.OnClickListener {
         sets.add(Integer.parseInt(setsInput5.getText().toString()));
         reps.add(Integer.parseInt(repsInput5.getText().toString()));
 
-        type = "hard";
-        lat = 66.66;
-        lon = 69.69;
-        id = "HardChallenge";
-        dbc.createChallenge(id, type, lat, lon, exercises, sets, reps);
-        Toast.makeText(getContext(), "CHALLENGE CREATED", Toast.LENGTH_SHORT).show();
+        DatabaseReference idRef = db.getReference().child("nextID").child("nextChallenge");
+        idRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String type = "hard";
+                double lat = 12.35;
+                double lon = 34.35;
+                String id = Long.toString(dataSnapshot.getValue(Long.class));
+                Toast.makeText(getContext(), id, Toast.LENGTH_SHORT).show();
+                dbc.createChallenge(id, type, lat, lon, exercises, sets, reps);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -200,10 +220,6 @@ public class Hard extends Fragment implements View.OnClickListener {
 
     }
 
-
-    public void showChoice(String message){
-
-    }
 
 
 }

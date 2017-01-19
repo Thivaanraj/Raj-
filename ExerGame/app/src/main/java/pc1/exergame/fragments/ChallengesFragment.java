@@ -1,10 +1,11 @@
 package pc1.exergame.fragments;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,57 +17,85 @@ import pc1.exergame.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChallengesFragment extends Fragment implements View.OnClickListener {
+public class ChallengesFragment extends Fragment{
 
 
     Button fetchEasy, fetchMedium, fetchHard;
 
+    public Communicator comm;
+
     public ChallengesFragment() {
         // Required empty public constructor
     }
+
+    public interface Communicator{
+        public void callFrag(String challengeType);
+    }
+
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+        Activity a =(Activity) context;
+
+        try{
+            comm = (Communicator) a;
+        } catch (ClassCastException e){
+            throw new ClassCastException(a.toString() + "CLASS CAST EXCEPTION");
+        }
+    }
+    /*@SuppressWarnings("deprecation")
+    @Override
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+            fc.callFrag("ez");
+        }
+    }*/
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_challenges, container, false);
-        fetchEasy = (Button) rootView.findViewById(R.id.fetchEasyFrag_btn);
-        fetchMedium = (Button) rootView.findViewById(R.id.fetchMediumFrag_btn);
-        fetchHard = (Button) rootView.findViewById(R.id.fetchHardFrag_btn);
+
+        // Inflate the layout for this fragment
+        return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+
+        comm = (Communicator) getActivity();
+
+        fetchEasy = (Button) getActivity().findViewById(R.id.fetchEasyFrag_btn);
+        fetchMedium = (Button) getActivity().findViewById(R.id.fetchMediumFrag_btn);
+        fetchHard = (Button) getActivity().findViewById(R.id.fetchHardFrag_btn);
 
 
 
         fetchEasy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                Easy easyFrag = new Easy();
-                ft.replace(R.id.content_main, easyFrag );
-                ft.commit();
+                comm.callFrag("ez");
             }
         });
 
         fetchMedium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                comm.callFrag("med");
             }
         });
 
         fetchHard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                comm.callFrag("hard");
             }
         });
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_challenges, container, false);
     }
 
-    @Override
-    public void onClick(View v) {
 
-    }
 }

@@ -2,6 +2,8 @@ package pc1.exergame.menu.activities;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,7 +24,7 @@ import pc1.exergame.fragments.MapViewFragment;
 import pc1.exergame.fragments.RankingFragment;
 
 
-public class MainMenuActivity extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity implements ChallengesFragment.Communicator{
 
     public static final String FRAGMENT_TAG = "fragment_tag";
 
@@ -48,8 +50,9 @@ public class MainMenuActivity extends AppCompatActivity {
     }
     
     private void createDefaultFragment(){
-        setFocus("challenges");
-        ChallengesFragment fragment = new ChallengesFragment();
+        setFocus("dashboard");
+        DashboardFragment fragment = new DashboardFragment();
+        // ChallengesFragment fragment = new ChallengesFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_container, fragment, FRAGMENT_TAG)
@@ -58,9 +61,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public void ChallengesClick(View view) {
         setFocus("challenges");
-        Hard fragment = new Hard();
+        //Hard fragment = new Hard();
         //Medium fragment = new Medium();
-        //ChallengesFragment fragment = new ChallengesFragment();
+        ChallengesFragment fragment = new ChallengesFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment, FRAGMENT_TAG)
@@ -106,4 +109,37 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void callFrag(String challengeType) {
+        switch (challengeType){
+            case "ez":
+                FragmentManager manager = getSupportFragmentManager();
+                manager.findFragmentByTag("ez_frag");
+
+                Easy ez = new Easy();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, ez, FRAGMENT_TAG)
+                        .commit();
+                break;
+            case "med":
+
+
+                Medium med = new Medium();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, med, FRAGMENT_TAG)
+                        .commit();
+                break;
+            case "hard":
+
+
+                Hard hard = new Hard();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, hard, FRAGMENT_TAG)
+                        .commit();
+        }
+
+    }
 }

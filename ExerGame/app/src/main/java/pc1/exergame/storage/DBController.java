@@ -37,20 +37,6 @@ public class DBController {
     * <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     * */
 
-    public void testPush(){
-        List<Integer>ex1 = new ArrayList<Integer>();
-        ex1.add(1);
-        ex1.add(2);
-        ex1.add(5);
-        dbRef.child("testDB").child("firstTest");
-        dbRef.child("testDB").child("firstTest").child("lat").setValue("newshit");
-        dbRef.child("testDB").child("firstTest").child("lon").setValue(69.69);
-        dbRef.child("testDB").child("firstTest").child("ex1").setValue(ex1);
-        //dbRef.child("testDB").child("firstTest").child("attemptCount").setValue(0);
-        dbRef.child("testDB").child("firstTest").child("isActive").setValue(1);
-
-
-    }
 
     public void createChallenge(String id, String type, double lat, double lon, List<String> exercises,
                                     List<Integer> sets, List<Integer> reps){
@@ -102,7 +88,6 @@ public class DBController {
 
     public void endChallenge(String id){
         dbRef.child("challenges").child(id).child("isActive").setValue(0);
-
     }
 
     /*
@@ -111,40 +96,32 @@ public class DBController {
     * <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     * */
 
-   /* public void isNear(String challengeID, double currentLat, double currentLon){;
-        DatabaseReference latRef = db.getReference().child("chalenges").child(challengeID).child("lat");
-        DatabaseReference lonRef = db.getReference().child("chalenges").child(challengeID).child("lat");
 
-        double chLat, chLon;
-        double latDiff = (currentLat-chLat) * (currentLat-chLat);
-        double lonDiff = (currentLon-chLon) * (currentLon-chLon);
-        latDiff=sqrt(latDiff);
-        lonDiff=sqrt(lonDiff);
-        if(latDiff < 0.01 && lonDiff < 0.01){
+    public void createAttemptEasy(String username, String challengeID){
+        dbRef.child("attempts").child(username).child("easy").setValue(challengeID);
 
-        }
-        else{
-            //give alert that challenge is too far
-        }
-    }*/
-
-    public void createAttempt(String attemptID, String userID, String challengeID, int time){ //int len docasne kym sa zhodneme na formate
-        dbRef.child("attempts").child(attemptID).child("userID").setValue(userID);
-        dbRef.child("attempts").child(attemptID).child("challengeID").setValue(challengeID);
-        //insert time
-
-        dbRef.child("challenges").child(challengeID).child("attemptCount").setValue(userID);
-        addPoints(challengeID, userID);
+        incrementAttemptCount(challengeID);
     }
+
+    public void createAttemptMedium(String username, String challengeID){
+        dbRef.child("attempts").child(username).child("medium").setValue(challengeID);
+
+        incrementAttemptCount(challengeID);
+    }
+
+    public void createAttemptHard(String username, String challengeID){
+        dbRef.child("attempts").child(username).child("hard").setValue(challengeID);
+
+        incrementAttemptCount(challengeID);
+    }
+
 
     public void incrementAttemptCount(final String id){
         DatabaseReference idRef = db.getReference().child("challenges").child(id).child("attemptCount");
         idRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(final MutableData currentData) {
-                if (currentData.getValue() == null) {
-                    currentData.setValue(1);
-                } else if(((Long) currentData.getValue()) < 50 ) {
+                if(((Long) currentData.getValue()) < 50 ) {
                     currentData.setValue((Long) currentData.getValue() + 1);
                 } else if(((Long) currentData.getValue()) == 50 ) {
                     endChallenge(id);
@@ -164,9 +141,6 @@ public class DBController {
         });
     }
 
-    public void addPoints(String challengeID, String userID){
-
-    }
 
     /*
     * <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -174,41 +148,15 @@ public class DBController {
     * <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     * */
 
-    public void incrementUserID(){
-        DatabaseReference idRef = db.getReference().child("nextID").child("nextUser");
-        idRef.runTransaction(new Transaction.Handler() {
-            @Override
-            public Transaction.Result doTransaction(final MutableData currentData) {
-                if (currentData.getValue() == null) {
-                    currentData.setValue(1);
-                } else {
-                    currentData.setValue((Long) currentData.getValue() + 1);
-                }
 
-                return Transaction.success(currentData);
-            }
-
-            @Override
-            public void onComplete(DatabaseError firebaseError, boolean committed, DataSnapshot currentData) {
-                if (firebaseError != null) {
-                    //Log.d("Firebase counter increment failed.");
-                } else {
-                    //Log.d("Firebase counter increment succeeded.");
-                }
-            }
-        });
-    }
 
     public void incrementChallengeID(){
         DatabaseReference idRef = db.getReference().child("nextID").child("nextChallenge");
         idRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(final MutableData currentData) {
-                if (currentData.getValue() == null) {
-                    currentData.setValue(1);
-                } else {
+
                     currentData.setValue((Long) currentData.getValue() + 1);
-                }
 
                 return Transaction.success(currentData);
             }
@@ -224,30 +172,6 @@ public class DBController {
         });
     }
 
-    public void incrementAttemptID(){
-        DatabaseReference idRef = db.getReference().child("nextID").child("nextAttempt");
-        idRef.runTransaction(new Transaction.Handler() {
-            @Override
-            public Transaction.Result doTransaction(final MutableData currentData) {
-                if (currentData.getValue() == null) {
-                    currentData.setValue(1);
-                } else {
-                    currentData.setValue((Long) currentData.getValue() + 1);
-                }
-
-                return Transaction.success(currentData);
-            }
-
-            @Override
-            public void onComplete(DatabaseError firebaseError, boolean committed, DataSnapshot currentData) {
-                if (firebaseError != null) {
-                    //Log.d("Firebase counter increment failed.");
-                } else {
-                    //Log.d("Firebase counter increment succeeded.");
-                }
-            }
-        });
-    }
 
 
     /*
@@ -256,46 +180,6 @@ public class DBController {
     * <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     * */
 
-    public String getData(String id, DataSnapshot ds){
-        return (String) ds.child("challenges").child(id).child("type").getValue();
-    }
 
-
-    public void getChallenge(String id){
-        DatabaseReference challengeRef = db.getReference().child("challenges").child(id);
-        /*challengeRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //String email = dataSnapshot.getValue(String.class);
-                //do what you want with the email
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-    }
-
-    public void getAttempt(){
-
-    }
-
-    //NEXT GETTERS
-
-    /*public int getNextUser(){
-        int next = (Integer) dbRef.child("nextID").child("nextUser").getValue();
-        return next;
-    }
-
-    public int getNextAttempt(){
-        int next = ((Integer) dbRef.child("nextID").child("nextAttempt").getValue());
-        return next;
-    }
-
-    public int getNextChallenge(){
-        int next = ((Integer) dbRef.child("nextID").child("nextChallenge").getValue());
-        return next;
-    }*/
 
 }

@@ -14,6 +14,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +32,8 @@ import pc1.exergame.storage.DBController;
  * A simple {@link Fragment} subclass.
  */
 public class Medium extends Fragment implements View.OnClickListener {
+
+    FirebaseDatabase db;
 
     private DBController dbc = new DBController();
     private String id, type, exSelection1, exSelection2, exSelection3;
@@ -53,6 +61,8 @@ public class Medium extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_medium, container, false);
+
+        db = FirebaseDatabase.getInstance();
 
         exercises = new ArrayList<String>();
         sets = new ArrayList<Integer>();
@@ -142,21 +152,28 @@ public class Medium extends Fragment implements View.OnClickListener {
         reps.add(Integer.parseInt(repsInput2.getText().toString()));
         sets.add(Integer.parseInt(setsInput3.getText().toString()));
         reps.add(Integer.parseInt(repsInput3.getText().toString()));
-        type = "medium";
-        lat = 66.66;
-        lon = 69.69;
-        id = "MediumChallenge";
-        dbc.createChallenge(id, type, lat, lon, exercises, sets, reps);
-        Toast.makeText(getContext(), "CHALLENGE CREATED", Toast.LENGTH_SHORT).show();
+
+        DatabaseReference idRef = db.getReference().child("nextID").child("nextChallenge");
+        idRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String type = "medium";
+                double lat = 12.44;
+                double lon = 34.43;
+                String id = Long.toString(dataSnapshot.getValue(Long.class));
+                Toast.makeText(getContext(), id, Toast.LENGTH_SHORT).show();
+                dbc.createChallenge(id, type, lat, lon, exercises, sets, reps);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
-
-    }
-
-
-    public void showChoice(String message){
 
     }
 

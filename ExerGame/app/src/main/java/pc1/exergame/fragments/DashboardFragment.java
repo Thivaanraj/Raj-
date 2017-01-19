@@ -1,24 +1,20 @@
 package pc1.exergame.fragments;
 
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pc1.exergame.R;
-import pc1.exergame.popups.ChallengeDetailDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,7 +39,7 @@ public class DashboardFragment extends Fragment {
     ListView listview;
     List<String> challengeList = new ArrayList<>();
     ArrayAdapter<String> adapter;
-    String selection, type;
+    String selection, type, userID, nick;
     TextView rank, username, points;
     TextView ex1, ex2, ex3, ex4, ex5;
     TextView set1, set2, set3, set4, set5, rep1, rep2, rep3, rep4, rep5;
@@ -70,6 +65,7 @@ public class DashboardFragment extends Fragment {
 
         checkUser();
 
+        Toast.makeText(getContext(), nick + " signed in", Toast.LENGTH_SHORT).show();
 
         ex1 = (TextView) rootView.findViewById(R.id.challenge_detail_ex1);
         ex2 = (TextView) rootView.findViewById(R.id.challenge_detail_ex2);
@@ -100,27 +96,63 @@ public class DashboardFragment extends Fragment {
         showEasy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference refDialog = db.getReference().child("challenges").child("ezTEst");
-                refDialog.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                DatabaseReference idRef = db.getReference().child("attempts").child(nick).child("easy");
+                idRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        ex1.setText(dataSnapshot.child("exercises").child("0").getValue(String.class));
-                        ex2.setText("");
-                        ex3.setText("");
-                        ex4.setText("");
-                        ex5.setText("");
+                        String challengeID = dataSnapshot.getValue(String.class);
+                        if (challengeID!=null) {
+                            Toast.makeText(getContext(), challengeID, Toast.LENGTH_SHORT).show();
+                            DatabaseReference chalRef = db.getReference().child("challenges").child(challengeID);
+                            chalRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    ex1.setText(dataSnapshot.child("exercises").child("0").getValue(String.class));
+                                    ex2.setText("");
+                                    ex3.setText("");
+                                    ex4.setText("");
+                                    ex5.setText("");
 
-                        set1.setText(String.valueOf(dataSnapshot.child("sets").child("0").getValue(Long.class)));
-                        set2.setText("");
-                        set3.setText("");
-                        set4.setText("");
-                        set5.setText("");
+                                    set1.setText(String.valueOf(dataSnapshot.child("sets").child("0").getValue(Long.class)));
+                                    set2.setText("");
+                                    set3.setText("");
+                                    set4.setText("");
+                                    set5.setText("");
 
-                        rep1.setText(String.valueOf(dataSnapshot.child("reps").child("0").getValue(Long.class)));
-                        rep2.setText("");
-                        rep3.setText("");
-                        rep4.setText("");
-                        rep5.setText("");
+                                    rep1.setText(String.valueOf(dataSnapshot.child("reps").child("0").getValue(Long.class)));
+                                    rep2.setText("");
+                                    rep3.setText("");
+                                    rep4.setText("");
+                                    rep5.setText("");
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                        else{
+                            ex1.setText("");
+                            ex2.setText("");
+                            ex3.setText("");
+                            ex4.setText("");
+                            ex5.setText("");
+
+                            set1.setText("");
+                            set2.setText("");
+                            set3.setText("");
+                            set4.setText("");
+                            set5.setText("");
+
+                            rep1.setText("");
+                            rep2.setText("");
+                            rep3.setText("");
+                            rep4.setText("");
+                            rep5.setText("");
+                        }
                     }
 
                     @Override
@@ -128,33 +160,69 @@ public class DashboardFragment extends Fragment {
 
                     }
                 });
+
             }
         });
 
         showMedium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference refDialog = db.getReference().child("challenges").child("MediumChallenge");
-                refDialog.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                DatabaseReference idRef = db.getReference().child("attempts").child(nick).child("medium");
+                idRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        ex1.setText((dataSnapshot.child("exercises").child("0").getValue(String.class)));
-                        ex2.setText((dataSnapshot.child("exercises").child("1").getValue(String.class)));
-                        ex3.setText((dataSnapshot.child("exercises").child("2").getValue(String.class)));
-                        ex4.setText("");
-                        ex5.setText("");
+                        String challengeID = dataSnapshot.getValue(String.class);
+                        if(challengeID!=null) {
+                            Toast.makeText(getContext(), challengeID, Toast.LENGTH_SHORT).show();
+                            DatabaseReference chalRef = db.getReference().child("challenges").child(challengeID);
+                            chalRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    ex1.setText((dataSnapshot.child("exercises").child("0").getValue(String.class)));
+                                    ex2.setText((dataSnapshot.child("exercises").child("1").getValue(String.class)));
+                                    ex3.setText((dataSnapshot.child("exercises").child("2").getValue(String.class)));
+                                    ex4.setText("");
+                                    ex5.setText("");
 
-                        set1.setText(String.valueOf(dataSnapshot.child("sets").child("0").getValue(Long.class)));
-                        set2.setText(String.valueOf(dataSnapshot.child("sets").child("1").getValue(Long.class)));
-                        set3.setText(String.valueOf(dataSnapshot.child("sets").child("2").getValue(Long.class)));
-                        set4.setText("");
-                        set5.setText("");
+                                    set1.setText(String.valueOf(dataSnapshot.child("sets").child("0").getValue(Long.class)));
+                                    set2.setText(String.valueOf(dataSnapshot.child("sets").child("1").getValue(Long.class)));
+                                    set3.setText(String.valueOf(dataSnapshot.child("sets").child("2").getValue(Long.class)));
+                                    set4.setText("");
+                                    set5.setText("");
 
-                        rep1.setText(String.valueOf(dataSnapshot.child("reps").child("0").getValue(Long.class)));
-                        rep2.setText(String.valueOf(dataSnapshot.child("sets").child("1").getValue(Long.class)));
-                        rep3.setText(String.valueOf(dataSnapshot.child("sets").child("2").getValue(Long.class)));
-                        rep4.setText("");
-                        rep5.setText("");
+                                    rep1.setText(String.valueOf(dataSnapshot.child("reps").child("0").getValue(Long.class)));
+                                    rep2.setText(String.valueOf(dataSnapshot.child("sets").child("1").getValue(Long.class)));
+                                    rep3.setText(String.valueOf(dataSnapshot.child("sets").child("2").getValue(Long.class)));
+                                    rep4.setText("");
+                                    rep5.setText("");
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                        else{
+                            ex1.setText("");
+                            ex2.setText("");
+                            ex3.setText("");
+                            ex4.setText("");
+                            ex5.setText("");
+
+                            set1.setText("");
+                            set2.setText("");
+                            set3.setText("");
+                            set4.setText("");
+                            set5.setText("");
+
+                            rep1.setText("");
+                            rep2.setText("");
+                            rep3.setText("");
+                            rep4.setText("");
+                            rep5.setText("");
+                        }
                     }
 
                     @Override
@@ -162,33 +230,69 @@ public class DashboardFragment extends Fragment {
 
                     }
                 });
+
             }
         });
 
         showHard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference refDialog = db.getReference().child("challenges").child("HardChallenge");
-                refDialog.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                DatabaseReference idRef = db.getReference().child("attempts").child(nick).child("hard");
+                idRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        ex1.setText((dataSnapshot.child("exercises").child("0").getValue(String.class)));
-                        ex2.setText((dataSnapshot.child("exercises").child("1").getValue(String.class)));
-                        ex3.setText((dataSnapshot.child("exercises").child("2").getValue(String.class)));
-                        ex4.setText((dataSnapshot.child("exercises").child("3").getValue(String.class)));
-                        ex5.setText((dataSnapshot.child("exercises").child("4").getValue(String.class)));
+                        String challengeID = dataSnapshot.getValue(String.class);
+                        if(challengeID!=null) {
+                            Toast.makeText(getContext(), challengeID, Toast.LENGTH_SHORT).show();
+                            DatabaseReference chalRef = db.getReference().child("challenges").child(challengeID);
+                            chalRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    ex1.setText((dataSnapshot.child("exercises").child("0").getValue(String.class)));
+                                    ex2.setText((dataSnapshot.child("exercises").child("1").getValue(String.class)));
+                                    ex3.setText((dataSnapshot.child("exercises").child("2").getValue(String.class)));
+                                    ex4.setText((dataSnapshot.child("exercises").child("3").getValue(String.class)));
+                                    ex5.setText((dataSnapshot.child("exercises").child("4").getValue(String.class)));
 
-                        set1.setText(String.valueOf(dataSnapshot.child("sets").child("0").getValue(Long.class)));
-                        set2.setText(String.valueOf(dataSnapshot.child("sets").child("1").getValue(Long.class)));
-                        set3.setText(String.valueOf(dataSnapshot.child("sets").child("2").getValue(Long.class)));
-                        set4.setText(String.valueOf(dataSnapshot.child("sets").child("3").getValue(Long.class)));
-                        set5.setText(String.valueOf(dataSnapshot.child("sets").child("4").getValue(Long.class)));
+                                    set1.setText(String.valueOf(dataSnapshot.child("sets").child("0").getValue(Long.class)));
+                                    set2.setText(String.valueOf(dataSnapshot.child("sets").child("1").getValue(Long.class)));
+                                    set3.setText(String.valueOf(dataSnapshot.child("sets").child("2").getValue(Long.class)));
+                                    set4.setText(String.valueOf(dataSnapshot.child("sets").child("3").getValue(Long.class)));
+                                    set5.setText(String.valueOf(dataSnapshot.child("sets").child("4").getValue(Long.class)));
 
-                        rep1.setText(String.valueOf(dataSnapshot.child("reps").child("0").getValue(Long.class)));
-                        rep2.setText(String.valueOf(dataSnapshot.child("sets").child("1").getValue(Long.class)));
-                        rep3.setText(String.valueOf(dataSnapshot.child("sets").child("2").getValue(Long.class)));
-                        rep4.setText(String.valueOf(dataSnapshot.child("sets").child("3").getValue(Long.class)));
-                        rep5.setText(String.valueOf(dataSnapshot.child("sets").child("4").getValue(Long.class)));
+                                    rep1.setText(String.valueOf(dataSnapshot.child("reps").child("0").getValue(Long.class)));
+                                    rep2.setText(String.valueOf(dataSnapshot.child("sets").child("1").getValue(Long.class)));
+                                    rep3.setText(String.valueOf(dataSnapshot.child("sets").child("2").getValue(Long.class)));
+                                    rep4.setText(String.valueOf(dataSnapshot.child("sets").child("3").getValue(Long.class)));
+                                    rep5.setText(String.valueOf(dataSnapshot.child("sets").child("4").getValue(Long.class)));
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                        else{
+                            ex1.setText("");
+                            ex2.setText("");
+                            ex3.setText("");
+                            ex4.setText("");
+                            ex5.setText("");
+
+                            set1.setText("");
+                            set2.setText("");
+                            set3.setText("");
+                            set4.setText("");
+                            set5.setText("");
+
+                            rep1.setText("");
+                            rep2.setText("");
+                            rep3.setText("");
+                            rep4.setText("");
+                            rep5.setText("");
+                        }
                     }
 
                     @Override
@@ -196,6 +300,7 @@ public class DashboardFragment extends Fragment {
 
                     }
                 });
+
             }
         });
 
@@ -211,7 +316,9 @@ public class DashboardFragment extends Fragment {
 
         if (user != null) {
             //Toast.makeText(getContext(), user.getEmail() + " signed in", Toast.LENGTH_SHORT).show();
+            userID = user.getUid();
             String displayedNick = user.getEmail().replace("@user.pae","");
+            nick = displayedNick;
             username.setText(displayedNick);
 
             DatabaseReference statRef = db.getReference().child("stats").child(displayedNick);

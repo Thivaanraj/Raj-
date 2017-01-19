@@ -13,7 +13,7 @@ public class SampleActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
         DBController dbc = new DBController();
-        dbc.testPush();
+
     }
 
 }
