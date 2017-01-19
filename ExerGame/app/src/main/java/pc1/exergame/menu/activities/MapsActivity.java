@@ -55,10 +55,8 @@ public class MapsActivity extends AppCompatActivity implements
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean mLocationPermissionGranted;
 
-    // The geographical location where the device is currently located.
     private Location mCurrentLocation;
 
-    // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
 
@@ -68,22 +66,16 @@ public class MapsActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
             mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
 
-        // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_maps);
-        // Build the Play services client for use by the Fused Location Provider and the Places API.
         buildGoogleApiClient();
         mGoogleApiClient.connect();
     }
 
-    /**
-     * Get the device location and nearby places when the activity is restored after a pause.
-     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -93,9 +85,6 @@ public class MapsActivity extends AppCompatActivity implements
         updateMarkers();
     }
 
-    /**
-     * Stop location updates when the activity is no longer in focus, to reduce battery consumption.
-     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -105,9 +94,6 @@ public class MapsActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * Saves the state of the map when the activity is paused.
-     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (mMap != null) {
@@ -117,10 +103,6 @@ public class MapsActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * Gets the device's current location and builds the map
-     * when the Google Play services client is successfully connected.
-     */
     @Override
     public void onConnected(Bundle connectionHint) {
         getDeviceLocation();
@@ -130,28 +112,17 @@ public class MapsActivity extends AppCompatActivity implements
         mapFragment.getMapAsync(this);
     }
 
-    /**
-     * Handles failure to connect to the Google Play services client.
-     */
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult result) {
-        // Refer to the reference doc for ConnectionResult to see what error codes might
-        // be returned in onConnectionFailed.
         Log.d(TAG, "Play services connection failed: ConnectionResult.getErrorCode() = "
                 + result.getErrorCode());
     }
 
-    /**
-     * Handles suspension of the connection to the Google Play services client.
-     */
     @Override
     public void onConnectionSuspended(int cause) {
         Log.d(TAG, "Play services connection suspended");
     }
 
-    /**
-     * Handles the callback when location changes.
-     */
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
@@ -162,10 +133,6 @@ public class MapsActivity extends AppCompatActivity implements
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * Manipulates the map when it's available.
-     * This callback is triggered when the map is ready to be used.
-     */
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
@@ -181,7 +148,11 @@ public class MapsActivity extends AppCompatActivity implements
 
                 Haversine mhav = new Haversine();
 
-                if (!mhav.IsClose(markPos.latitude, markPos.longitude, mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()).equals("true")){
+                if (mhav.IsClose(markPos.latitude, markPos.longitude, mCurrentLocation.getLatitude(),
+                        mCurrentLocation.getLongitude()).equals("true")){
+                    Bundle args = new Bundle();
+                    args.putString("LUL", "ULU");
+                    query.setArguments(args);
                     query.show(fm, "LUL");
                 } else {
                     toastMessage("Challange too far away");
@@ -196,40 +167,11 @@ public class MapsActivity extends AppCompatActivity implements
                 .title("HERE I AM")
                 .snippet("THIS IS ME"));
 
-        // Turn on the My Location layer and the related control on the map.
+
         updateLocationUI();
-        // Add markers for nearby places.
+
         updateMarkers();
 
-        // Use a custom info window adapter to handle multiple lines of text in the
-        // info window contents.
-        /*mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
-            @Override
-            // Return null here, so that getInfoContents() is called next.
-            public View getInfoWindow(Marker arg0) {
-                return null;
-            }
-
-            @Override
-            public View getInfoContents(Marker marker) {
-                // Inflate the layouts for the info window, title and snippet.
-                View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents, null);
-
-                TextView title = ((TextView) infoWindow.findViewById(R.id.title));
-                title.setText(marker.getTitle());
-
-                TextView snippet = ((TextView) infoWindow.findViewById(R.id.snippet));
-                snippet.setText(marker.getSnippet());
-
-                return infoWindow;
-            }
-        });*/
-        /*
-         * Set the map's camera position to the current location of the device.
-         * If the previous state was saved, set the position to the saved state.
-         * If the current location is unknown, use a default position and zoom value.
-         */
         if (mCameraPosition != null) {
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(mCameraPosition));
         } else if (mCurrentLocation != null) {
@@ -243,10 +185,6 @@ public class MapsActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * Builds a GoogleApiClient.
-     * Uses the addApi() method to request the Google Places API and the Fused Location Provider.
-     */
     private synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */,
@@ -257,38 +195,15 @@ public class MapsActivity extends AppCompatActivity implements
         createLocationRequest();
     }
 
-    /**
-     * Sets up the location request.
-     */
+
     private void createLocationRequest() {
         mLocationRequest = new LocationRequest();
-
-        /*
-         * Sets the desired interval for active location updates. This interval is
-         * inexact. You may not receive updates at all if no location sources are available, or
-         * you may receive them slower than requested. You may also receive updates faster than
-         * requested if other applications are requesting location at a faster interval.
-         */
         mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
-
-        /*
-         * Sets the fastest rate for active location updates. This interval is exact, and your
-         * application will never receive updates faster than this value.
-         */
         mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
-
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
-    /**
-     * Gets the current location of the device and starts the location update notifications.
-     */
     private void getDeviceLocation() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -298,11 +213,7 @@ public class MapsActivity extends AppCompatActivity implements
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
-        /*
-         * Get the best and most recent location of the device, which may be null in rare
-         * cases when a location is not available.
-         * Also request regular updates about the device location.
-         */
+
         if (mLocationPermissionGranted) {
             mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
@@ -310,9 +221,6 @@ public class MapsActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * Handles the result of the request for location permissions.
-     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[],
@@ -330,22 +238,13 @@ public class MapsActivity extends AppCompatActivity implements
         updateLocationUI();
     }
 
-    /**
-     * Adds markers for places nearby the device and turns the My Location feature on or off,
-     * provided location permission has been granted.
-     */
     private void updateMarkers() {
         if (mMap == null) {
             return;
         }
 
         if (mLocationPermissionGranted) {
-            LatLng mLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-            /*mMap.addMarker(new MarkerOptions()
-                    .position(mLatLng)
-                    .title("HERE I AM")
-                    .snippet("THIS IS ME"));*/
-            // Toast.makeText(MapsActivity.this, "makovnik", Toast.LENGTH_SHORT).show();
+
         } else {
             mMap.addMarker(new MarkerOptions()
                     .position(mDefaultLocation)
@@ -354,9 +253,6 @@ public class MapsActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * Updates the map's UI settings based on whether the user has granted location permission.
-     */
     @SuppressWarnings("MissingPermission")
     private void updateLocationUI() {
         if (mMap == null) {

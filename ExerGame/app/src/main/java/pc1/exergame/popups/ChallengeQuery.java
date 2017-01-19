@@ -10,7 +10,10 @@ public class ChallengeQuery extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Are you up for this challenge?")
+
+        String msg = getArguments().getString("LUL");
+
+        builder.setMessage("Are you up for this challenge? "+ msg)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // FIRE ZE MISSILES!

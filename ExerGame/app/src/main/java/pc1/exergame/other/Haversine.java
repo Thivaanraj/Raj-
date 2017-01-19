@@ -1,14 +1,10 @@
 package pc1.exergame.other;
 
-/**
- * Created by Sharess on 19-Jan-17.
- */
-
 public class Haversine {
-    public static final double radius = 6372.8; // In kilometers
+    private static final double radius = 6372.8; // In kilometers
     private double hav;
 
-    public double haversine(double lat1, double lon1, double lat2, double lon2) {
+    private double haversine(double lat1, double lon1, double lat2, double lon2) {
         double dLat = Math.toRadians(lat2 - lat1);
         double dLon = Math.toRadians(lon2 - lon1);
         lat1 = Math.toRadians(lat1);
