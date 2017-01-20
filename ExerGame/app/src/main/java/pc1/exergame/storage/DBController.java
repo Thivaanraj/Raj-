@@ -104,26 +104,84 @@ public class DBController {
 
     public void createAttemptEasy(String username, String challengeID){
         dbRef.child("attempts").child(username).child("easy").setValue(challengeID);
+        final DatabaseReference statRef = db.getReference().child("stats").child(username);
+        statRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Long points = dataSnapshot.getValue(Long.class);
+                points = points - 5;
+                statRef.setValue(points);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         incrementAttemptCount(challengeID);
     }
 
     public void createAttemptMedium(String username, String challengeID){
         dbRef.child("attempts").child(username).child("medium").setValue(challengeID);
+        final DatabaseReference statRef = db.getReference().child("stats").child(username);
+        statRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Long points = dataSnapshot.getValue(Long.class);
+                points = points - 10;
+                statRef.setValue(points);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         incrementAttemptCount(challengeID);
     }
 
     public void createAttemptHard(String username, String challengeID){
         dbRef.child("attempts").child(username).child("hard").setValue(challengeID);
+        final DatabaseReference statRef = db.getReference().child("stats").child(username);
+        statRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Long points = dataSnapshot.getValue(Long.class);
+                points = points - 15;
+                statRef.setValue(points);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         incrementAttemptCount(challengeID);
     }
 
 
     public void incrementAttemptCount(final String id){
-        DatabaseReference idRef = db.getReference().child("challenges").child(id).child("attemptCount");
-        idRef.runTransaction(new Transaction.Handler() {
+        final DatabaseReference idRef = db.getReference().child("challenges").child(id).child("attemptCount");
+        idRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Long attempts = dataSnapshot.getValue(Long.class);
+                if(attempts<50){
+                    attempts++;
+                    idRef.setValue(attempts);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        /*idRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(final MutableData currentData) {
                 if(((Long) currentData.getValue()) < 50 ) {
@@ -143,7 +201,7 @@ public class DBController {
                     //Log.d("Firebase counter increment succeeded.");
                 }
             }
-        });
+        });*/
     }
 
 
