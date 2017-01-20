@@ -1,16 +1,15 @@
 package pc1.exergame.menu.activities;
 
+import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -26,11 +25,12 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 import pc1.exergame.R;
 import pc1.exergame.other.Haversine;
@@ -38,7 +38,7 @@ import pc1.exergame.popups.ChallengeQuery;
 import pc1.exergame.storage.ChallengeMarkers;
 import pc1.exergame.storage.DBController;
 
-public class MapsActivity extends AppCompatActivity implements
+public class MapsActivity extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -67,6 +67,8 @@ public class MapsActivity extends AppCompatActivity implements
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
 
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase db;
     private DatabaseReference dbref;
     private Haversine mhav;
@@ -152,35 +154,43 @@ public class MapsActivity extends AppCompatActivity implements
         mMap = map;
         mMap.getUiSettings().setCompassEnabled(false);
         mMap.getUiSettings().setMapToolbarEnabled(false);
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public void onInfoWindowClick(Marker marker) {
+            public boolean onMarkerClick(Marker marker){
+                if(marker.getSnippet() == null){
+                    mMap.moveCamera(CameraUpdateFactory.zoomIn());
+                    return true;
+                }
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = mAuth.getCurrentUser();
                 ChallengeQuery query = new ChallengeQuery();
                 FragmentManager fm = getSupportFragmentManager();
-
                 LatLng markPos = marker.getPosition();
-
                 Haversine mhav = new Haversine();
+                Boolean inProx;
 
                 if (mhav.IsClose(markPos.latitude, markPos.longitude, mCurrentLocation.getLatitude(),
                         mCurrentLocation.getLongitude()).equals("true")){
-                    Bundle args = new Bundle();
-                    args.putString("LUL", "ULU");
-                    query.setArguments(args);
-                    query.show(fm, "LUL");
-                } else {
-                    toastMessage("Challange too far away");
+                    inProx = true;
+                } else { inProx = false; }
+
+                Bundle args = new Bundle();
+                if (user != null){
+                    String username = user.getEmail().replace("@user.pae","");
+                    args.putString("username", username);
                 }
 
+                args.putBoolean("proximity", inProx);
+                args.putString("description", marker.getSnippet());
+                args.putString("type", marker.getTitle());
+                args.putString("id", marker.getTag().toString());
+                query.setArguments(args);
+                query.show(fm, "LUL");
+
+                return true;
             }
         });
-
-        LatLng mLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-        mMap.addMarker(new MarkerOptions()
-                .position(mLatLng)
-                .title("HERE I AM")
-                .snippet("THIS IS ME"));
-
 
         updateLocationUI();
 
@@ -274,27 +284,25 @@ public class MapsActivity extends AppCompatActivity implements
                     Log.i("exerMark", "values: "+  exer.values());
 
                     for (String exKey : exer.keySet()) {
-                        snippetMessage = snippetMessage + exer.get(exKey).get("name") + ", Sets: " +
-                                exer.get(exKey).get("sets") + " Reps: " + exer.get(exKey).get("reps") + "\n";
+                        snippetMessage = snippetMessage + exer.get(exKey).get("name") + ":  Sets: " +
+                                exer.get(exKey).get("sets") + "  Reps: " + exer.get(exKey).get("reps") + "\n";
                     }
 
-
-                    mMap.addMarker(new MarkerOptions()
-                            .position(mLatLng)
-                            .title(markers.get(key).getType())
-                            .snippet(snippetMessage)
-                    );
+                    if (markers.get(key).isActive()){
+                        mMap.addMarker(new MarkerOptions()
+                                .position(mLatLng)
+                                .title(markers.get(key).getType())
+                                .snippet(snippetMessage)
+                        ).setTag(key);
+                    }
 
                 }
 
             }
 
         } else {
-            /*mMap.addMarker(new MarkerOptions()
-                    .position(mDefaultLocation)
-                    .title("OI LIStEN HERE")
-                    .snippet("OI M8"));
-            */
+
+
         }
     }
 
