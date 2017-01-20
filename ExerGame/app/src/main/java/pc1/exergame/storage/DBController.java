@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static java.lang.Math.sqrt;
@@ -211,10 +212,10 @@ public class DBController {
 
                     for (DataSnapshot exer : snapId.child("exercises").getChildren()){
                         final String indx = Integer.toString(i);
-                        final DataSnapshot mExer = exer;
+                        //final DataSnapshot mExer = exer;
                         final DataSnapshot mSnapId = snapId;
-                        exercises.put(indx, new HashMap<String, Object>(){{
-                            put("name", mExer.child(indx).getValue());
+                        exercises.put(indx, new HashMap(){{
+                            put("name", mSnapId.child("exercises").child(indx).getValue());
                             put("sets", mSnapId.child("sets").child(indx).getValue());
                             put("reps", mSnapId.child("reps").child(indx).getValue());
                         }});

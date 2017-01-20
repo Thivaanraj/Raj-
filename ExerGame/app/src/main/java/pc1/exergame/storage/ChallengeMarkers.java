@@ -9,8 +9,6 @@ public class ChallengeMarkers {
     private boolean isActive;
     private double latitude;
     private double longitude;
-    private int reps;
-    private int sets;
     private String type;
     private HashMap exercises;
 
@@ -54,22 +52,6 @@ public class ChallengeMarkers {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
-    }
-
-    public int getReps() {
-        return reps;
-    }
-
-    public void setReps(int reps) {
-        this.reps = reps;
-    }
-
-    public int getSets() {
-        return sets;
-    }
-
-    public void setSets(int sets) {
-        this.sets = sets;
     }
 
     public String getType() {

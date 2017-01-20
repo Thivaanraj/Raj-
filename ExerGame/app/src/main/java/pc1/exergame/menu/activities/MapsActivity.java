@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 import pc1.exergame.R;
 import pc1.exergame.other.Haversine;
@@ -263,13 +264,37 @@ public class MapsActivity extends AppCompatActivity implements
                 Log.i("markerz", "markers empty: ");
             } else {
                 Log.i("markerz", "keyset: "+  markers.keySet());
+
+                for (String key : markers.keySet()){
+                    LatLng mLatLng = new LatLng(markers.get(key).getLatitude(), markers.get(key).getLongitude());
+                    HashMap<String, HashMap> exer = markers.get(key).getExcercises();
+                    String snippetMessage = "";
+
+                    Log.i("exerMark", "keyset: "+  exer.keySet());
+                    Log.i("exerMark", "values: "+  exer.values());
+
+                    for (String exKey : exer.keySet()) {
+                        snippetMessage = snippetMessage + exer.get(exKey).get("name") + ", Sets: " +
+                                exer.get(exKey).get("sets") + " Reps: " + exer.get(exKey).get("reps") + "\n";
+                    }
+
+
+                    mMap.addMarker(new MarkerOptions()
+                            .position(mLatLng)
+                            .title(markers.get(key).getType())
+                            .snippet(snippetMessage)
+                    );
+
+                }
+
             }
 
         } else {
-            mMap.addMarker(new MarkerOptions()
+            /*mMap.addMarker(new MarkerOptions()
                     .position(mDefaultLocation)
                     .title("OI LIStEN HERE")
                     .snippet("OI M8"));
+            */
         }
     }
 
