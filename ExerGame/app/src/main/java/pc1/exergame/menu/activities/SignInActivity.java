@@ -134,6 +134,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     FirebaseDatabase db = FirebaseDatabase.getInstance();
                     DatabaseReference dbRef = db.getReference().child("stats");
                     dbRef.child(nick).setValue(0);
+                    DatabaseReference rankRef = db.getReference().child("ranks");
+                    rankRef.child(nick).setValue(0);
                 } else {
                     toastMessage(SignInActivity.this, "Account creation failed");
                 }
