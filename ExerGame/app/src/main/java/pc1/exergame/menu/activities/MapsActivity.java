@@ -26,10 +26,16 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 import pc1.exergame.R;
 import pc1.exergame.other.Haversine;
 import pc1.exergame.popups.ChallengeQuery;
+import pc1.exergame.storage.ChallengeMarkers;
+import pc1.exergame.storage.DBController;
 
 public class MapsActivity extends AppCompatActivity implements
         OnMapReadyCallback,
@@ -60,11 +66,18 @@ public class MapsActivity extends AppCompatActivity implements
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
 
+    private FirebaseDatabase db;
+    private DatabaseReference dbref;
     private Haversine mhav;
+    private DBController dbc;
+    private HashMap<String, ChallengeMarkers> markers;
+    private ChallengeMarkers mCM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbc = new DBController();
+        dbc.parseChallenges();
 
         if (savedInstanceState != null) {
             mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
@@ -244,6 +257,13 @@ public class MapsActivity extends AppCompatActivity implements
         }
 
         if (mLocationPermissionGranted) {
+            markers = dbc.getMarkers();
+
+            if (markers.isEmpty()) {
+                Log.i("markerz", "markers empty: ");
+            } else {
+                Log.i("markerz", "keyset: "+  markers.keySet());
+            }
 
         } else {
             mMap.addMarker(new MarkerOptions()

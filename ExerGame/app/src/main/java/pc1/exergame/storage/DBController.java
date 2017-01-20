@@ -15,7 +15,9 @@ import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.lang.Math.sqrt;
 
@@ -23,11 +25,13 @@ public class DBController {
 
     FirebaseDatabase db;
     DatabaseReference dbRef;
+    HashMap<String, ChallengeMarkers> markers;
 
 
     public DBController(){
         db = FirebaseDatabase.getInstance();
         dbRef = db.getReference();
+        markers = new HashMap<>();
     }
 
 
@@ -180,6 +184,57 @@ public class DBController {
     * <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     * */
 
+    public HashMap getMarkers(){
+        return markers;
+    }
 
+    public void parseChallenges(){
+        DatabaseReference df = db.getReference().child("challenges");
+        df.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapId : dataSnapshot.getChildren()){
+                    ChallengeMarkers mCM = new ChallengeMarkers();
+                    HashMap exercises = new HashMap<>();
 
+                    mCM.setId(snapId.getKey());
+                    Log.i("markers", "SNAP" + snapId.getKey());
+                    mCM.setAttempts(snapId.child("attemptCount").getValue(Long.class));
+                    if (snapId.child("isActive").getValue(Long.class) == 1) {
+                        mCM.setActive(true);
+                    } else { mCM.setActive(false); }
+                    mCM.setLatitude((Double) snapId.child("lat").getValue());
+                    mCM.setLongitude((Double) snapId.child("lon").getValue());
+                    mCM.setType(snapId.child("type").getValue(String.class));
+
+                    int i = 0;
+
+                    for (DataSnapshot exer : snapId.child("exercises").getChildren()){
+                        final String indx = Integer.toString(i);
+                        final DataSnapshot mExer = exer;
+                        final DataSnapshot mSnapId = snapId;
+                        exercises.put(indx, new HashMap<String, Object>(){{
+                            put("name", mExer.child(indx).getValue());
+                            put("sets", mSnapId.child("sets").child(indx).getValue());
+                            put("reps", mSnapId.child("reps").child(indx).getValue());
+                        }});
+                        i++;
+                    }
+                    mCM.setExcercises(exercises);
+                    markers.put(snapId.getKey(),mCM);
+                    Log.i("SNAP", "onDataChange: "+snapId.getKey());
+
+                    Log.i("markers", "type: "+ mCM.getType());
+                    Log.i("markers", "attempts: "+ mCM.getAttempts());
+                    Log.i("markers", "Lat: "+ mCM.getLatitude());
+                    Log.i("markers", "Lon: "+ mCM.getLongitude());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 }
