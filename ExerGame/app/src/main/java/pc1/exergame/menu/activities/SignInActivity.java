@@ -191,6 +191,16 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null){
+            Intent intent = new Intent(this, MainMenuActivity.class);
+            startActivity(intent);
+        }
+    }
+
     // <<<<<<<<<< INTENTS >>>>>>>>>>
     public void goToMain(View view){
         Intent intent = new Intent(this, MainMenuActivity.class);

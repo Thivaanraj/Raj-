@@ -60,6 +60,9 @@ public class Hard extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_hard, container, false);
+        Bundle location = getArguments();
+        lat = location.getDouble("lat");
+        lon = location.getDouble("long");
 
         db = FirebaseDatabase.getInstance();
 
@@ -201,8 +204,6 @@ public class Hard extends Fragment implements View.OnClickListener {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String type = "hard";
-                double lat = 12.35;
-                double lon = 34.35;
                 String id = Long.toString(dataSnapshot.getValue(Long.class));
                 Toast.makeText(getContext(), id, Toast.LENGTH_SHORT).show();
                 dbc.createChallenge(id, type, lat, lon, exercises, sets, reps);
