@@ -1,9 +1,4 @@
 package pc1.exergame.menu.activities;
-/**
- * Main Menu activity.
- * All the fragments are called in this method.
- * Functionality of toolbar is also implemented here.
- */
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -54,12 +49,6 @@ public class MainMenuActivity extends AppCompatActivity implements
     private boolean mLocationPermissionGranted;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
-    /**
-     * on Create
-     * switch view to Main Menu and connect to Google API
-     * show Toolbar and initialize
-     * @param savedInstanceState
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -77,9 +66,6 @@ public class MainMenuActivity extends AppCompatActivity implements
 
     }
 
-    /**
-     * default focus is showing Dashboard fragment.
-     */
     private void createDefaultFragment() {
         if(!checkFocus("dashboard")) {
             setFocus("dashboard");
@@ -91,10 +77,6 @@ public class MainMenuActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * If user clicks on challenges creation button -> initialize new Challenge Fragment
-     * @param view
-     */
     public void ChallengesClick(View view) {
         if (!checkFocus("challenges")) {
             setFocus("challenges");
@@ -106,19 +88,11 @@ public class MainMenuActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * If user clicks on Map Browsing button -> switch to MapActivity
-     * @param view
-     */
     public void MapClick(View view) {
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
 
-    /**
-     * If users clicks on Rankings button -> initialize Ranking fragment
-     * @param view
-     */
     public void RankingClick(View view) {
         if (!checkFocus("ranking")) {
             setFocus("ranking");
@@ -130,10 +104,6 @@ public class MainMenuActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * If user clicks on Dashboard button - initialize Dashboard fragment
-     * @param view
-     */
     public void DashboardClick(View view) {
         if(!checkFocus("dashboard")) {
             setFocus("dashboard");
@@ -145,10 +115,6 @@ public class MainMenuActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * Method for user global sign out of the app
-     * @param view
-     */
     public void globalSignOut(View view) {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -156,10 +122,7 @@ public class MainMenuActivity extends AppCompatActivity implements
         finish();
     }
 
-    /**
-     * Calling different types of create Challenge Fragments in Create Challenge Fragment.
-     * @param challengeType
-     */
+
     @Override
     public void callFrag(String challengeType) {
         Bundle loc = new Bundle();
@@ -221,10 +184,7 @@ public class MainMenuActivity extends AppCompatActivity implements
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-    /**
-     * Builder to help construct the GoogleApiClient object.
-     * Connecting to Google Maps API and creating of a new location request
-     */
+
     private synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */,
@@ -235,18 +195,14 @@ public class MainMenuActivity extends AppCompatActivity implements
         createLocationRequest();
     }
 
-    /**
-     *Create a new location request and update device location in time intervals.
-     */
+
     private void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(5000);
         mLocationRequest.setFastestInterval(2000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
-    /**
-     * This method checks for granted permissions and gets the last known device location
-     */
+
     private void getDeviceLocation() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -266,9 +222,6 @@ public class MainMenuActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * on Resume fetch new device location
-     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -277,10 +230,6 @@ public class MainMenuActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * on Pause
-     * Removes all location updates for the given pending intent.
-     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -291,10 +240,6 @@ public class MainMenuActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * Called when the location has changed
-     * @param location
-     */
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
