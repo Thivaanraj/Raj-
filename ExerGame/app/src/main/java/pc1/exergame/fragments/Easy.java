@@ -99,7 +99,7 @@ public class Easy extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 exSelection = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getContext(), exSelection, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), exSelection, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -129,7 +129,7 @@ public class Easy extends Fragment implements View.OnClickListener {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String type = "easy";
                 String id = Long.toString(dataSnapshot.getValue(Long.class));
-                Toast.makeText(getContext(), id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Challenge Created", Toast.LENGTH_SHORT).show();
                 dbc.createChallenge(id, type, lat, lon, exercises, sets, reps);
                 dbc.incrementChallengeID();
 
@@ -140,7 +140,7 @@ public class Easy extends Fragment implements View.OnClickListener {
 
             }
         });
-        comm.callFrag("dash");
+        comm.callFrag("create");
 
     }
 

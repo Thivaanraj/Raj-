@@ -86,7 +86,7 @@ public class DashboardFragment extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String challengeID = dataSnapshot.getValue(String.class);
                         if (challengeID != null) {
-                            Toast.makeText(getContext(), challengeID, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), challengeID, Toast.LENGTH_SHORT).show();
                             DatabaseReference chalRef = db.getReference().child("challenges").child(challengeID);
                             chalRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -156,7 +156,7 @@ public class DashboardFragment extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String challengeID = dataSnapshot.getValue(String.class);
                         if (challengeID != null) {
-                            Toast.makeText(getContext(), challengeID, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), challengeID, Toast.LENGTH_SHORT).show();
                             DatabaseReference chalRef = db.getReference().child("challenges").child(challengeID);
                             chalRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -225,7 +225,7 @@ public class DashboardFragment extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String challengeID = dataSnapshot.getValue(String.class);
                         if (challengeID != null) {
-                            Toast.makeText(getContext(), challengeID, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), challengeID, Toast.LENGTH_SHORT).show();
                             DatabaseReference chalRef = db.getReference().child("challenges").child(challengeID);
                             chalRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override

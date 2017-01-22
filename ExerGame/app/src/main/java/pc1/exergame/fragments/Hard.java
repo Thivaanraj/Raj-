@@ -94,7 +94,7 @@ public class Hard extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 exSelection1 = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getContext(), exSelection1, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getContext(), exSelection1, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -111,7 +111,7 @@ public class Hard extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 exSelection2 = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getContext(), exSelection2, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), exSelection2, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -128,7 +128,7 @@ public class Hard extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 exSelection3 = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getContext(), exSelection3, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getContext(), exSelection3, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -145,7 +145,7 @@ public class Hard extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 exSelection4 = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getContext(), exSelection4, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getContext(), exSelection4, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -162,7 +162,7 @@ public class Hard extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 exSelection5 = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getContext(), exSelection3, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), exSelection3, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -212,7 +212,7 @@ public class Hard extends Fragment implements View.OnClickListener {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String type = "hard";
                 String id = Long.toString(dataSnapshot.getValue(Long.class));
-                Toast.makeText(getContext(), id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Challenge Created", Toast.LENGTH_SHORT).show();
                 dbc.createChallenge(id, type, lat, lon, exercises, sets, reps);
                 dbc.incrementChallengeID();
                 exercises.clear();
@@ -225,7 +225,7 @@ public class Hard extends Fragment implements View.OnClickListener {
 
             }
         });
-        comm.callFrag("dash");
+        comm.callFrag("create");
     }
 
     @Override
