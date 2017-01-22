@@ -1,4 +1,8 @@
 package pc1.exergame.menu.activities;
+/**
+ * Class for implementing login activity for the app using firebase realtime database
+ *
+ */
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -31,7 +35,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private EditText etPass;
     private EditText etEmail;
 
-
+    /**
+     * Initialize Activity and name and password fields
+     * @param savedInstanceState
+     * if a User is logged in - proceed to autoLogin() which then switches to MainActivity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +69,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    /**
+     * Method used for checking if fields aren't epmty.
+     * automatically used suffix "@user.pae" is for storing nicknames as emails in Firebase
+     * @return
+     */
     private boolean checkFormFields() {
         String email, password;
 
@@ -79,6 +92,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         return true;
     }
 
+    /**
+     * Method for checking users credentials
+     * @param view
+     */
     private void signUserIn(final View view) {
         if (!checkFormFields()) return;
 
@@ -111,12 +128,19 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-
+    /**
+     * toastMessage show
+     * @param obj
+     * @param message
+     */
     private void toastMessage(SignInActivity obj, String message){
         Toast.makeText(obj, message, Toast.LENGTH_SHORT).show();
     }
 
-
+    /**
+     * Method for passing and storing arguments (nickname and password) in Firebase.
+     * (Register user method)
+     */
     private void createUserAccount(){
         if (!checkFormFields()) return;
 
@@ -152,6 +176,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
+    /**
+     * if User is logged in -> go to MainMenu Activity
+     */
     private void autoLogin(){
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -162,7 +189,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-
+    /**
+     * defining actions for two buttons login and sign up
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -177,12 +207,18 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * add authStateListener
+     */
     @Override
     public void onStart(){
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
+    /**
+     * removes AuthStateListener
+     */
     @Override
     public void onStop(){
         super.onStop();
@@ -191,6 +227,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * on Resume / check for user login,
+     * if true then proceed to MainMenuActivity
+     */
     @Override
     public void onResume(){
         super.onResume();
@@ -201,6 +241,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * Method used for switching directly to MainMenu Activity
+     * @param view
+     */
     // <<<<<<<<<< INTENTS >>>>>>>>>>
     public void goToMain(View view){
         Intent intent = new Intent(this, MainMenuActivity.class);

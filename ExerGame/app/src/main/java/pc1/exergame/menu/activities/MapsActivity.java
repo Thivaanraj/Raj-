@@ -1,4 +1,7 @@
 package pc1.exergame.menu.activities;
+/**
+ * Class is handling the whole Browse Map Activity
+ */
 
 import android.app.Dialog;
 import android.content.pm.PackageManager;
@@ -76,6 +79,13 @@ public class MapsActivity extends FragmentActivity implements
     private HashMap<String, ChallengeMarkers> markers;
     private ChallengeMarkers mCM;
 
+    /**
+     * onCreate
+     * Connect to GoogleAPIClient
+     * if last position of map is known, show this position
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +102,10 @@ public class MapsActivity extends FragmentActivity implements
         mGoogleApiClient.connect();
     }
 
+    /**
+     * on Resume
+     * retrieve device location and update markers in given position
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -100,7 +114,10 @@ public class MapsActivity extends FragmentActivity implements
         }
         updateMarkers();
     }
-
+/**
+ * on Pause
+ * Removes all location updates for the given pending intent.
+ */
     @Override
     protected void onPause() {
         super.onPause();
@@ -110,6 +127,10 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
+    /**
+     * Saves Camera position to
+     * @param outState
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (mMap != null) {
@@ -119,6 +140,10 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
+    /**
+     * when connected, get deviceLocation and build the map fragment.
+     * @param connectionHint
+     */
     @Override
     public void onConnected(Bundle connectionHint) {
         getDeviceLocation();
@@ -128,17 +153,30 @@ public class MapsActivity extends FragmentActivity implements
         mapFragment.getMapAsync(this);
     }
 
+
+    /**
+     * onConnectionFailed method / logging
+     * @param result
+     */
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult result) {
         Log.d(TAG, "Play services connection failed: ConnectionResult.getErrorCode() = "
                 + result.getErrorCode());
     }
 
+    /**
+     * on ConnectionSuspended method / logging
+     * @param cause
+     */
     @Override
     public void onConnectionSuspended(int cause) {
         Log.d(TAG, "Play services connection suspended");
     }
 
+    /**
+     * If device location is changed / update Markers on the map
+     * @param location
+     */
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
@@ -149,6 +187,12 @@ public class MapsActivity extends FragmentActivity implements
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * provides parameters for displaying map content (Compass, Toolbar)
+     * on Marker click check if user is close enough. Then make the Challenge available
+     *
+     * @param map
+     */
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
@@ -209,6 +253,10 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
+    /**
+     * Builder to help construct the GoogleApiClient object.
+     * Connecting to Google Maps API and creating of a new location request
+     */
     private synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */,
@@ -219,7 +267,9 @@ public class MapsActivity extends FragmentActivity implements
         createLocationRequest();
     }
 
-
+    /**
+     * Method creates new location request (time interval, and accuracy/priority)
+     */
     private void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
@@ -227,6 +277,9 @@ public class MapsActivity extends FragmentActivity implements
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
+    /**
+     * This method checks for granted permissions and gets the last known device location
+     */
     private void getDeviceLocation() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -245,6 +298,13 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
+    /**
+     * Callback for the result from requesting permissions.
+     * This method is invoked for every call on requestPermissions
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[],
@@ -262,6 +322,9 @@ public class MapsActivity extends FragmentActivity implements
         updateLocationUI();
     }
 
+    /**
+     * Get all markers for showed Map from Firebase database based on latitude and longitude
+     */
     private void updateMarkers() {
         if (mMap == null) {
             return;
@@ -306,6 +369,9 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
+    /**
+     * Check for missing location permission
+     */
     @SuppressWarnings("MissingPermission")
     private void updateLocationUI() {
         if (mMap == null) {
