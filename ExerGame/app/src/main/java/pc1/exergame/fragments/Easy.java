@@ -9,6 +9,7 @@ import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,9 +133,7 @@ public class Easy extends Fragment implements View.OnClickListener {
                 Toast.makeText(getContext(), id, Toast.LENGTH_SHORT).show();
                 dbc.createChallenge(id, type, lat, lon, exercises, sets, reps);
                 dbc.incrementChallengeID();
-                exercises.clear();
-                sets.clear();
-                reps.clear();
+                //this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
             }
 
             @Override
@@ -142,6 +141,10 @@ public class Easy extends Fragment implements View.OnClickListener {
 
             }
         });
+        exercises.clear();
+        sets.clear();
+        reps.clear();
+
         //Toast.makeText(getContext(), "CHALLENGE CREATED", Toast.LENGTH_SHORT).show();
     }
 
