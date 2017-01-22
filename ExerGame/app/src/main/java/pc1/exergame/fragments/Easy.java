@@ -2,26 +2,16 @@ package pc1.exergame.fragments;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.app.DialogFragment;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -35,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pc1.exergame.R;
-import pc1.exergame.popups.ExerciseOne;
 import pc1.exergame.storage.DBController;
 
 /**
@@ -45,13 +34,11 @@ public class Easy extends Fragment implements View.OnClickListener {
 
     private DBController dbc = new DBController();
     FirebaseDatabase db;
-    DatabaseReference idRef;
 
     private String exSelection;
     private List<String> exercises;
     private List<Integer> sets;
     private List<Integer> reps;
-    private int isActive, attemptCount;
 
     private double lat;
     private double lon;
@@ -63,18 +50,14 @@ public class Easy extends Fragment implements View.OnClickListener {
 
     public ChallengesFragment.Communicator comm;
 
-    public interface Communicator{
-        public void callFrag(String challengeType);
-    }
-
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
 
-        Activity a =(Activity) context;
+        Activity a = (Activity) context;
 
-        try{
+        try {
             comm = (ChallengesFragment.Communicator) a;
-        } catch (ClassCastException e){
+        } catch (ClassCastException e) {
             throw new ClassCastException(a.toString() + "CLASS CAST EXCEPTION");
         }
     }
@@ -82,8 +65,6 @@ public class Easy extends Fragment implements View.OnClickListener {
     public Easy() {
         // Required empty public constructor
     }
-
-
 
 
     @Override
@@ -118,7 +99,7 @@ public class Easy extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 exSelection = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getContext(),exSelection,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), exSelection, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -136,11 +117,10 @@ public class Easy extends Fragment implements View.OnClickListener {
 
     }
 
-    public void createChallenge(){
+    public void createChallenge() {
         exercises.add(exSelection);
         sets.add(Integer.valueOf(setsInput.getText().toString()));
         reps.add(Integer.valueOf(repsInput.getText().toString()));
-
 
 
         DatabaseReference idRef = db.getReference().child("nextID").child("nextChallenge");
@@ -162,14 +142,12 @@ public class Easy extends Fragment implements View.OnClickListener {
         });
         comm.callFrag("dash");
 
-        //Toast.makeText(getContext(), "CHALLENGE CREATED", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View v) {
 
     }
-
 
 
 }

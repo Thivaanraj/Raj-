@@ -3,7 +3,6 @@ package pc1.exergame.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,10 +13,7 @@ import android.widget.Button;
 import pc1.exergame.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ChallengesFragment extends Fragment{
+public class ChallengesFragment extends Fragment {
 
 
     Button fetchEasy, fetchMedium, fetchHard;
@@ -28,31 +24,21 @@ public class ChallengesFragment extends Fragment{
         // Required empty public constructor
     }
 
-    public interface Communicator{
+    public interface Communicator {
         public void callFrag(String challengeType);
     }
 
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
 
-        Activity a =(Activity) context;
+        Activity a = (Activity) context;
 
-        try{
+        try {
             comm = (Communicator) a;
-        } catch (ClassCastException e){
+        } catch (ClassCastException e) {
             throw new ClassCastException(a.toString() + "CLASS CAST EXCEPTION");
         }
     }
-    /*@SuppressWarnings("deprecation")
-    @Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
-            fc.callFrag("ez");
-        }
-    }*/
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,7 +50,7 @@ public class ChallengesFragment extends Fragment{
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         comm = (Communicator) getActivity();
@@ -72,7 +58,6 @@ public class ChallengesFragment extends Fragment{
         fetchEasy = (Button) getActivity().findViewById(R.id.fetchEasyFrag_btn);
         fetchMedium = (Button) getActivity().findViewById(R.id.fetchMediumFrag_btn);
         fetchHard = (Button) getActivity().findViewById(R.id.fetchHardFrag_btn);
-
 
 
         fetchEasy.setOnClickListener(new View.OnClickListener() {

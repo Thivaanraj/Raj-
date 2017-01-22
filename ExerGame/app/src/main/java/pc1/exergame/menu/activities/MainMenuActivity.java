@@ -6,7 +6,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -39,7 +38,10 @@ public class MainMenuActivity extends AppCompatActivity implements
     public void setFocus(String focus) {
         this.focus = focus;
     }
-    public boolean checkFocus(String focus){ return this.focus.equals(focus); }
+
+    public boolean checkFocus(String focus) {
+        return this.focus.equals(focus);
+    }
 
     private String focus = "";
 
@@ -60,14 +62,13 @@ public class MainMenuActivity extends AppCompatActivity implements
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
-        //setSupportActionBar(toolbar);
 
         createDefaultFragment();
 
     }
 
     private void createDefaultFragment() {
-        if(!checkFocus("dashboard")) {
+        if (!checkFocus("dashboard")) {
             setFocus("dashboard");
             DashboardFragment fragment = new DashboardFragment();
             getSupportFragmentManager()
@@ -105,7 +106,7 @@ public class MainMenuActivity extends AppCompatActivity implements
     }
 
     public void DashboardClick(View view) {
-        if(!checkFocus("dashboard")) {
+        if (!checkFocus("dashboard")) {
             setFocus("dashboard");
             DashboardFragment fragment = new DashboardFragment();
             getSupportFragmentManager()

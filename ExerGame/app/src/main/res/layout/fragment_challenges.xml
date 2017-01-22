@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:padding="10dp"
     android:orientation="vertical"
-    android:layout_marginTop="40dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="50dp"
     tools:context="pc1.exergame.fragments.ChallengesFragment">
 
     <!-- TODO: Update blank fragment layout -->

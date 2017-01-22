@@ -27,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".storage.SampleActivity" />
         <activity android:name=".menu.activities.MainMenuActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

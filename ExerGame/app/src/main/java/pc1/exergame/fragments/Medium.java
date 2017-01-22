@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,20 +29,16 @@ import pc1.exergame.storage.DBController;
 
 //import android.app.Fragment;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class Medium extends Fragment implements View.OnClickListener {
 
     FirebaseDatabase db;
 
     private DBController dbc = new DBController();
-    private String id, type, exSelection1, exSelection2, exSelection3;
+    private String exSelection1, exSelection2, exSelection3;
     private double lat, lon;
     private List<String> exercises;
     private List<Integer> sets;
     private List<Integer> reps;
-    private int isActive, attemptCount;
 
 
     Spinner exSpin1, exSpin2, exSpin3;
@@ -52,18 +47,15 @@ public class Medium extends Fragment implements View.OnClickListener {
 
     public ChallengesFragment.Communicator comm;
 
-    public interface Communicator{
-        public void callFrag(String challengeType);
-    }
 
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
 
-        Activity a =(Activity) context;
+        Activity a = (Activity) context;
 
-        try{
+        try {
             comm = (ChallengesFragment.Communicator) a;
-        } catch (ClassCastException e){
+        } catch (ClassCastException e) {
             throw new ClassCastException(a.toString() + "CLASS CAST EXCEPTION");
         }
     }
@@ -72,8 +64,6 @@ public class Medium extends Fragment implements View.OnClickListener {
     public Medium() {
         // Required empty public constructor
     }
-
-
 
 
     @Override
@@ -108,7 +98,7 @@ public class Medium extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 exSelection1 = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getContext(),exSelection1,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), exSelection1, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -125,7 +115,7 @@ public class Medium extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 exSelection2 = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getContext(),exSelection1,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), exSelection1, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -142,7 +132,7 @@ public class Medium extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 exSelection3 = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getContext(),exSelection1,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), exSelection1, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -164,7 +154,7 @@ public class Medium extends Fragment implements View.OnClickListener {
 
     }
 
-    public void createChallenge(){
+    public void createChallenge() {
         exercises.add(exSelection1);
         exercises.add(exSelection2);
         exercises.add(exSelection3);

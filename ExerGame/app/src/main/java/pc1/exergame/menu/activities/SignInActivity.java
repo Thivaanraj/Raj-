@@ -1,12 +1,11 @@
 package pc1.exergame.menu.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -64,14 +63,14 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private boolean checkFormFields() {
         String email, password;
 
-        email = etEmail.getText().toString()+"@user.pae";
+        email = etEmail.getText().toString() + "@user.pae";
         password = etPass.getText().toString();
 
         if (email.isEmpty()) {
             etEmail.setError("Email Required");
             return false;
         }
-        if (password.isEmpty()){
+        if (password.isEmpty()) {
             etPass.setError("Password Required");
             return false;
         }
@@ -82,7 +81,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void signUserIn(final View view) {
         if (!checkFormFields()) return;
 
-        String email = etEmail.getText().toString()+"@user.pae";
+        String email = etEmail.getText().toString() + "@user.pae";
         String password = etPass.getText().toString();
 
         email = email.replace(" ", "");
@@ -102,8 +101,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             public void onFailure(@NonNull Exception e) {
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     toastMessage(SignInActivity.this, "Invalid Password");
-                } else if (e instanceof FirebaseAuthInvalidUserException){
-                    toastMessage(SignInActivity.this, "Invalid email");
+                } else if (e instanceof FirebaseAuthInvalidUserException) {
+                    toastMessage(SignInActivity.this, "Invalid Username");
                 } else {
                     toastMessage(SignInActivity.this, e.getLocalizedMessage());
                 }
@@ -112,16 +111,16 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void toastMessage(SignInActivity obj, String message){
+    private void toastMessage(SignInActivity obj, String message) {
         Toast.makeText(obj, message, Toast.LENGTH_SHORT).show();
     }
 
 
-    private void createUserAccount(){
+    private void createUserAccount() {
         if (!checkFormFields()) return;
 
         final String nick = etEmail.getText().toString();
-        String email = etEmail.getText().toString()+"@user.pae";
+        String email = etEmail.getText().toString() + "@user.pae";
         String password = etPass.getText().toString();
 
         email = email.replace(" ", "");
@@ -143,8 +142,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                if (e instanceof FirebaseAuthUserCollisionException){
-                    toastMessage(SignInActivity.this, "Email in use");
+                if (e instanceof FirebaseAuthUserCollisionException) {
+                    toastMessage(SignInActivity.this, "Username in use");
                 } else {
                     toastMessage(SignInActivity.this, e.getLocalizedMessage());
                 }
@@ -152,15 +151,14 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    private void autoLogin(){
+    private void autoLogin() {
         FirebaseUser user = mAuth.getCurrentUser();
 
-        if (user != null){
+        if (user != null) {
             Intent intent = new Intent(this, MainMenuActivity.class);
             startActivity(intent);
         }
     }
-
 
 
     @Override
@@ -178,13 +176,13 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
@@ -192,17 +190,17 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null){
+        if (user != null) {
             Intent intent = new Intent(this, MainMenuActivity.class);
             startActivity(intent);
         }
     }
 
     // <<<<<<<<<< INTENTS >>>>>>>>>>
-    public void goToMain(View view){
+    public void goToMain(View view) {
         Intent intent = new Intent(this, MainMenuActivity.class);
         startActivity(intent);
     }

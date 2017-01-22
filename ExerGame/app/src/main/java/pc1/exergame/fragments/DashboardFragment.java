@@ -2,14 +2,11 @@ package pc1.exergame.fragments;
 
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,25 +18,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import pc1.exergame.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class DashboardFragment extends Fragment {
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+
 
     FirebaseDatabase db;
-    DatabaseReference dbRef;
-    ListView listview;
-    List<String> challengeList = new ArrayList<>();
-    ArrayAdapter<String> adapter;
-    String selection, type, userID, nick;
+    String userID, nick;
     TextView rank, username, points;
     TextView ex1, ex2, ex3, ex4, ex5;
     TextView set1, set2, set3, set4, set5, rep1, rep2, rep3, rep4, rep5;
@@ -65,8 +52,6 @@ public class DashboardFragment extends Fragment {
 
         checkUser();
 
-        Toast.makeText(getContext(), nick + " signed in", Toast.LENGTH_SHORT).show();
-
         ex1 = (TextView) rootView.findViewById(R.id.challenge_detail_ex1);
         ex2 = (TextView) rootView.findViewById(R.id.challenge_detail_ex2);
         ex3 = (TextView) rootView.findViewById(R.id.challenge_detail_ex3);
@@ -91,8 +76,6 @@ public class DashboardFragment extends Fragment {
         showHard = (Button) rootView.findViewById(R.id.dash_showHard_btn);
 
 
-
-
         showEasy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +85,7 @@ public class DashboardFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String challengeID = dataSnapshot.getValue(String.class);
-                        if (challengeID!=null) {
+                        if (challengeID != null) {
                             Toast.makeText(getContext(), challengeID, Toast.LENGTH_SHORT).show();
                             DatabaseReference chalRef = db.getReference().child("challenges").child(challengeID);
                             chalRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -133,8 +116,7 @@ public class DashboardFragment extends Fragment {
 
                                 }
                             });
-                        }
-                        else{
+                        } else {
                             ex1.setText("");
                             ex2.setText("");
                             ex3.setText("");
@@ -173,7 +155,7 @@ public class DashboardFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String challengeID = dataSnapshot.getValue(String.class);
-                        if(challengeID!=null) {
+                        if (challengeID != null) {
                             Toast.makeText(getContext(), challengeID, Toast.LENGTH_SHORT).show();
                             DatabaseReference chalRef = db.getReference().child("challenges").child(challengeID);
                             chalRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -203,8 +185,7 @@ public class DashboardFragment extends Fragment {
 
                                 }
                             });
-                        }
-                        else{
+                        } else {
                             ex1.setText("");
                             ex2.setText("");
                             ex3.setText("");
@@ -243,7 +224,7 @@ public class DashboardFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String challengeID = dataSnapshot.getValue(String.class);
-                        if(challengeID!=null) {
+                        if (challengeID != null) {
                             Toast.makeText(getContext(), challengeID, Toast.LENGTH_SHORT).show();
                             DatabaseReference chalRef = db.getReference().child("challenges").child(challengeID);
                             chalRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -273,8 +254,7 @@ public class DashboardFragment extends Fragment {
 
                                 }
                             });
-                        }
-                        else{
+                        } else {
                             ex1.setText("");
                             ex2.setText("");
                             ex3.setText("");
@@ -300,24 +280,20 @@ public class DashboardFragment extends Fragment {
 
                     }
                 });
-
             }
         });
-
-
 
         // Inflate the layout for this fragment
         return rootView;
     }
 
-    private void checkUser(){
+    private void checkUser() {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (user != null) {
-            //Toast.makeText(getContext(), user.getEmail() + " signed in", Toast.LENGTH_SHORT).show();
             userID = user.getUid();
-            String displayedNick = user.getEmail().replace("@user.pae","");
+            String displayedNick = user.getEmail().replace("@user.pae", "");
             nick = displayedNick;
             username.setText(displayedNick);
 
@@ -352,7 +328,6 @@ public class DashboardFragment extends Fragment {
 
         }
     }
-
 
 
 }

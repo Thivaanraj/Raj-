@@ -1,6 +1,5 @@
 package pc1.exergame.menu.activities;
 
-import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -27,8 +25,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
@@ -68,13 +64,9 @@ public class MapsActivity extends FragmentActivity implements
     private static final String KEY_LOCATION = "location";
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseDatabase db;
-    private DatabaseReference dbref;
-    private Haversine mhav;
+
     private DBController dbc;
     private HashMap<String, ChallengeMarkers> markers;
-    private ChallengeMarkers mCM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,9 +137,6 @@ public class MapsActivity extends FragmentActivity implements
         updateMarkers();
     }
 
-    private void toastMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public void onMapReady(GoogleMap map) {
@@ -157,8 +146,8 @@ public class MapsActivity extends FragmentActivity implements
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker){
-                if(marker.getSnippet() == null){
+            public boolean onMarkerClick(Marker marker) {
+                if (marker.getSnippet() == null) {
                     mMap.moveCamera(CameraUpdateFactory.zoomIn());
                     return true;
                 }
@@ -171,13 +160,15 @@ public class MapsActivity extends FragmentActivity implements
                 Boolean inProx;
 
                 if (mhav.IsClose(markPos.latitude, markPos.longitude, mCurrentLocation.getLatitude(),
-                        mCurrentLocation.getLongitude()).equals("true")){
+                        mCurrentLocation.getLongitude()).equals("true")) {
                     inProx = true;
-                } else { inProx = false; }
+                } else {
+                    inProx = false;
+                }
 
                 Bundle args = new Bundle();
-                if (user != null){
-                    String username = user.getEmail().replace("@user.pae","");
+                if (user != null) {
+                    String username = user.getEmail().replace("@user.pae", "");
                     args.putString("username", username);
                 }
 
@@ -273,36 +264,30 @@ public class MapsActivity extends FragmentActivity implements
             if (markers.isEmpty()) {
                 Log.i("markerz", "markers empty: ");
             } else {
-                Log.i("markerz", "keyset: "+  markers.keySet());
+                Log.i("markerz", "keyset: " + markers.keySet());
 
-                for (String key : markers.keySet()){
+                for (String key : markers.keySet()) {
                     LatLng mLatLng = new LatLng(markers.get(key).getLatitude(), markers.get(key).getLongitude());
                     HashMap<String, HashMap> exer = markers.get(key).getExcercises();
                     String snippetMessage = "";
 
-                    Log.i("exerMark", "keyset: "+  exer.keySet());
-                    Log.i("exerMark", "values: "+  exer.values());
+                    Log.i("exerMark", "keyset: " + exer.keySet());
+                    Log.i("exerMark", "values: " + exer.values());
 
                     for (String exKey : exer.keySet()) {
                         snippetMessage = snippetMessage + exer.get(exKey).get("name") + ":  Sets: " +
                                 exer.get(exKey).get("sets") + "  Reps: " + exer.get(exKey).get("reps") + "\n";
                     }
 
-                    if (markers.get(key).isActive()){
+                    if (markers.get(key).isActive()) {
                         mMap.addMarker(new MarkerOptions()
                                 .position(mLatLng)
                                 .title(markers.get(key).getType())
                                 .snippet(snippetMessage)
                         ).setTag(key);
                     }
-
                 }
-
             }
-
-        } else {
-
-
         }
     }
 
