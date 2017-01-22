@@ -1,6 +1,8 @@
 package pc1.exergame.fragments;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -46,6 +48,24 @@ public class Hard extends Fragment implements View.OnClickListener {
     Spinner exSpin1, exSpin2, exSpin3, exSpin4, exSpin5;
     EditText setsInput1, repsInput1, setsInput2, repsInput2, setsInput3, repsInput3, setsInput4, repsInput4, setsInput5, repsInput5;
     Button createBtn;
+
+    public ChallengesFragment.Communicator comm;
+
+    public interface Communicator{
+        public void callFrag(String challengeType);
+    }
+
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+        Activity a =(Activity) context;
+
+        try{
+            comm = (ChallengesFragment.Communicator) a;
+        } catch (ClassCastException e){
+            throw new ClassCastException(a.toString() + "CLASS CAST EXCEPTION");
+        }
+    }
 
 
     public Hard() {
@@ -218,6 +238,7 @@ public class Hard extends Fragment implements View.OnClickListener {
 
             }
         });
+        comm.callFrag("dash");
     }
 
     @Override

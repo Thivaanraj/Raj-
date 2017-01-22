@@ -1,7 +1,9 @@
 package pc1.exergame.fragments;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.DialogFragment;
@@ -59,6 +61,23 @@ public class Easy extends Fragment implements View.OnClickListener {
     EditText setsInput, repsInput;
     Button createBtn;
 
+    public ChallengesFragment.Communicator comm;
+
+    public interface Communicator{
+        public void callFrag(String challengeType);
+    }
+
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+        Activity a =(Activity) context;
+
+        try{
+            comm = (ChallengesFragment.Communicator) a;
+        } catch (ClassCastException e){
+            throw new ClassCastException(a.toString() + "CLASS CAST EXCEPTION");
+        }
+    }
 
     public Easy() {
         // Required empty public constructor
@@ -133,7 +152,7 @@ public class Easy extends Fragment implements View.OnClickListener {
                 Toast.makeText(getContext(), id, Toast.LENGTH_SHORT).show();
                 dbc.createChallenge(id, type, lat, lon, exercises, sets, reps);
                 dbc.incrementChallengeID();
-                //this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+
             }
 
             @Override
@@ -141,9 +160,7 @@ public class Easy extends Fragment implements View.OnClickListener {
 
             }
         });
-        exercises.clear();
-        sets.clear();
-        reps.clear();
+        comm.callFrag("dash");
 
         //Toast.makeText(getContext(), "CHALLENGE CREATED", Toast.LENGTH_SHORT).show();
     }

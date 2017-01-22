@@ -158,6 +158,14 @@ public class MainMenuActivity extends AppCompatActivity implements
                         .replace(R.id.fragment_container, hard, FRAGMENT_TAG)
                         .commit();
                 break;
+            case "dash":
+                DashboardFragment dash = new DashboardFragment();
+                //dash.setArguments(loc);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.fragment_container, dash, FRAGMENT_TAG)
+                        .commit();
         }
 
     }
