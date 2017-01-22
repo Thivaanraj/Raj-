@@ -55,7 +55,7 @@ public class DBController {
         dbRef.child("challenges").child(id).child("attemptCount").setValue(0);
         dbRef.child("challenges").child(id).child("isActive").setValue(1);
 
-        incrementChallengeID();
+        //incrementChallengeID();
 
     }
 
@@ -70,7 +70,7 @@ public class DBController {
         dbRef.child("challenges").child(id).child("attemptCount").setValue(0);
         dbRef.child("challenges").child(id).child("isActive").setValue(1);
 
-        incrementChallengeID();
+        //incrementChallengeID();
 
     }
 
@@ -87,7 +87,7 @@ public class DBController {
         dbRef.child("challenges").child(id).child("attemptCount").setValue(0);
         dbRef.child("challenges").child(id).child("isActive").setValue(1);
 
-        incrementChallengeID();
+        //incrementChallengeID();
 
     }
 

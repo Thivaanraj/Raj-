@@ -207,6 +207,7 @@ public class Hard extends Fragment implements View.OnClickListener {
                 String id = Long.toString(dataSnapshot.getValue(Long.class));
                 Toast.makeText(getContext(), id, Toast.LENGTH_SHORT).show();
                 dbc.createChallenge(id, type, lat, lon, exercises, sets, reps);
+                dbc.incrementChallengeID();
             }
 
             @Override
