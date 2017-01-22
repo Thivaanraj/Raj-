@@ -165,6 +165,9 @@ public class Medium extends Fragment implements View.OnClickListener {
                 Toast.makeText(getContext(), id, Toast.LENGTH_SHORT).show();
                 dbc.createChallenge(id, type, lat, lon, exercises, sets, reps);
                 dbc.incrementChallengeID();
+                exercises.clear();
+                sets.clear();
+                reps.clear();
             }
 
             @Override
