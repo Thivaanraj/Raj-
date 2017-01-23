@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -256,6 +257,10 @@ public class MapsActivity extends FragmentActivity implements
     private void updateMarkers() {
         if (mMap == null) {
             return;
+        }
+
+        if (mCurrentLocation == null){
+            Toast.makeText(this, "Location required, please turn on the GPS", Toast.LENGTH_SHORT).show();
         }
 
         if (mLocationPermissionGranted) {

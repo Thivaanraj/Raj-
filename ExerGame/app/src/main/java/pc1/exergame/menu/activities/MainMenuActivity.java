@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -126,6 +127,13 @@ public class MainMenuActivity extends AppCompatActivity implements
 
     @Override
     public void callFrag(String challengeType) {
+
+        if (mCurrentLocation == null){
+            Toast.makeText(this, "Location required, please turn the GPS on and wait 1-2 seconds " +
+                    "for the app to sync ", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         Bundle loc = new Bundle();
         loc.putDouble("lat", mCurrentLocation.getLatitude());
         loc.putDouble("long", mCurrentLocation.getLongitude());
