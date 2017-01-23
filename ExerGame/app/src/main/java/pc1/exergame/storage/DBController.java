@@ -136,6 +136,9 @@ public class DBController {
                     attempts++;
                     idRef.setValue(attempts);
                 }
+                else{
+                    endChallenge(id);
+                }
             }
 
             @Override
