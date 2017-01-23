@@ -19,7 +19,7 @@ public class Haversine {
     public String IsClose(double lat1, double lon1, double lat2, double lon2){
         haversine(lat1, lon1, lat2, lon2);
 
-        if(hav <= 0.1){
+        if(hav <= 0.05){
             return "true";
         }else{
             return "false";
